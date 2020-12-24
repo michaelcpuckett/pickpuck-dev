@@ -29,28 +29,7 @@ const registerComponents = async () => {
     const props = templateEl.getAttribute('data-props')
       .split(',')
       .map(string => string.trim())
-    const type = templateEl.getAttribute('data-type')
-    const name = `Type${type}`
-    Vue.component(name, {
-      inheritAttrs: false,
-      props,
-      template
-    })
-    scriptEl.remove()
-  }))
-}
-
-const registerSections = async () => {
-  const sectionScriptEls = queryAll('script[data-section]')
-
-  return await Promise.all(sectionScriptEls.map(async scriptEl => {
-    const templateEl = await fetchTemplateFromScript(scriptEl)
-    const template = getTemplateContents(templateEl)
-    const props = templateEl.getAttribute('data-props')
-      .split(',')
-      .map(string => string.trim())
-    const section = templateEl.getAttribute('data-section')
-    const name = `Section${section}`
+    const name = templateEl.getAttribute('data-name')
     Vue.component(name, {
       inheritAttrs: false,
       props,
@@ -118,10 +97,7 @@ const renderBody = async config => {
 }
 
 const render = async config => {
-  await Promise.all([
-    registerSections(),
-    registerComponents()
-  ])
+  await registerComponents()
   await Promise.all([
     renderBody(config),
     renderHead(config),

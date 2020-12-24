@@ -1,8 +1,5 @@
 <template>
   <main>
-    <component
-      :is="'Type' + config.type"
-      v-bind="config"
-    />
+    <type-person v-bind="config" />
   </main>
 </template>
