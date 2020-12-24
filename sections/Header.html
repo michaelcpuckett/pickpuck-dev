@@ -1,12 +1,12 @@
 <template
 	data-name="section-header"
-	data-props="name,image,jobTitle,sameAs,description">
+	data-props="name,image,jobTitle,sameAs,description,email">
     <header>
 			<h1 class="primary-heading">
 				<img
 					class="person-image property-image"
 					:src="image"
-					alt="Photograph"
+					alt="Photograph of Michael Puckett"
 					aria-hidden="true"
 					draggable="false"
 					width="75"
@@ -19,8 +19,15 @@
 					{{ jobTitle }}
 				</span>
 			</h1>
-			<p class="person-description property-description"> {{ description }}</p>
+			<p class="person-description property-description">
+				{{ description }}
+			</p>
 			<ul class="links-list">
+				<li class="link-item">
+					<a :href="'mailto:' + email + '?subject=yo'">
+						email
+					</a>
+				</li>
 				<li
 					v-for="link in sameAs"
 					:key="link"
