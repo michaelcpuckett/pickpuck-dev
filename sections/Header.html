@@ -2,18 +2,18 @@
 	data-name="section-header"
 	data-props="name,image,jobTitle,sameAs,description,email">
     <header>
+      <img
+        class="person-image property-image"
+        :src="image"
+        :alt="'Photograph of ' + name + ', ' + jobTitle"
+        aria-hidden="true"
+        draggable="false"
+        width="75"
+        height="75"
+      />
 			<h1 class="primary-heading">
-				<img
-					class="person-image property-image"
-					:src="image"
-					alt="Photograph of Michael Puckett"
-					aria-hidden="true"
-					draggable="false"
-					width="75"
-					height="75"
-				/>
 				<span class="person-name property-name">
-					{{ name }}
+					{{ name }}<span class="visually-hidden">,</span>
 				</span>
 				<span class="person-jobTitle property-jobTitle">
 					{{ jobTitle }}

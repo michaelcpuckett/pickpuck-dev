@@ -65,6 +65,18 @@ section {
   }
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
+  visibility: hidden;
+  clip: rect(0 0 0 0);
+  margin: -1px;
+  border: 0;
+  padding: 0;
+}
+
 h1,
 h2,
 h3,
@@ -80,6 +92,10 @@ h2 {
 	margin-bottom: .75em;
 	padding-bottom: .25em;
 	border-bottom: 1px solid var(--swatch-light-gray);
+}
+
+h3 {
+  font: inherit;
 }
 
 a {
@@ -118,7 +134,7 @@ summary::-webkit-details-marker {
 }
 
 :focus,
-summary:focus > span {
+summary:focus > div {
 	outline: 0;
 	box-shadow: 0 0 0 6px 2px var(--swatch-interactive);
 }
@@ -136,6 +152,10 @@ details:not([open]) summary {
 	border-bottom-color: var(--swatch-light-gray);
 }
 
+summary span {
+  display: block;
+}
+
 summary > span {
 	display: grid;
 	width: calc(100% - 20px);
@@ -148,6 +168,9 @@ summary > span {
 		grid-template-rows: max-content max-content;
     grid-gap: 4px;
 	}
+  summary > span > span:last-of-type {
+    text-align: right;
+  }
 }
 
 details p {
@@ -197,18 +220,6 @@ details .property-description {
   margin: 20px 0;
 }
 
-@media (min-width: 480px) {
-  .skill-alternate-name,
-  .property-dateRange,
-  .property-organization-location {
-    text-align: right;
-  }
-}
-
-.property-endDate:before {
-	content: ' - ';
-}
-
 .work-description,
 .education-description,
 .skill-description {
@@ -239,4 +250,8 @@ details .property-description {
 
 .unstyled-list {
   list-style: none;
+}
+
+[hidden] {
+  display: none !important;
 }

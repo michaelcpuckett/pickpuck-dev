@@ -11,41 +11,55 @@
 	<details :open="open">
 		<summary>
 			<span class="work-item item">
-				<template
-					v-for="employer in [ worksFor ]"
-					:key="employer.name">
-					<span class="work-employer-name property-name"><!--
-			  	     -->{{ employer.name }}<!--
-					--></span>
-					<template v-if="employer.address">
-						<span
-							class="work-employer-location property-organization-location"
-							v-for="address in [ employer.address ]"><!--
-							-->{{ address.addressLocality }}, {{ address.addressRegion }}<!--
-						--></span>
-					</template>
-				</template>
-				<span class="work-roleName property-roleName">
-					{{ roleName }}
-				</span>
-				<span class="property-dateRange">
-					<time
-						:datetime="startDate"
-						class="work-startDate property-startDate"><!--
-						-->{{ startDate }}<!--
-					--></time>
-					<time
-						:datetime="endDate || new Date().getFullYear()"
-						class="work-endDate property-endDate"><!--
-						-->{{ endDate || 'Present' }}<!--
-					--></time>
-				</span>
+        <span>
+          <template
+            v-for="employer in [ worksFor ]"
+            :key="employer.name">
+            <span class="work-employer-name property-name">
+               {{ employer.name }}
+            </span>
+            <span hidden>
+              —
+            </span>
+            <template v-if="employer.address">
+              <span
+                class="work-employer-location property-organization-location"
+                v-for="address in [ employer.address ]">
+                {{ address.addressLocality }}, {{ address.addressRegion }}
+              </span>
+            </template>
+          </template>
+        </span>
+        <span hidden>
+          —
+        </span>
+        <span>
+          <span class="work-roleName property-roleName">
+            {{ roleName }}
+          </span>
+          <span hidden>
+            —
+          </span>
+          <span class="property-dateRange">
+            <time
+              :datetime="startDate"
+              class="work-startDate property-startDate">
+              {{ startDate }}<!--
+            --></time><!--
+            -->—<!--
+            --><time
+              :datetime="endDate || new Date().getFullYear()"
+              class="work-endDate property-endDate"><!--
+              -->{{ endDate || 'Present' }}
+            </time>
+  				</span>
+        </span>
 			</span>
 		</summary>
 		<div class="work-description property-description" v-if="description">
-    		<p v-for="p in description">
-    			{{ p }}
-    		</p>
-    	</div>
+      <p v-for="p in description">
+        {{ p }}
+      </p>
+    </div>
 	</details>
 </template>
