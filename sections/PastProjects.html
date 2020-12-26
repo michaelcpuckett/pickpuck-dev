@@ -9,23 +9,24 @@
         'Corporation',
         'GovernmentOrganization'
       ].includes(workItem.worksFor.type) && workItem.endDate < (new Date().getFullYear() - 10))"
+			class="section-past-projects"
       data-hide-from-print>
 			<h2>Past Projects</h2>
 			<ul class="unstyled-list">
-			<li
-				v-for="workItem in worksFor"
-				v-if="![
-					'Corporation',
-					'GovernmentOrganization'
-				].includes(workItem.worksFor.type) || [
-					'Corporation',
-					'GovernmentOrganization'
-				].includes(workItem.worksFor.type) && workItem.endDate < (new Date().getFullYear() - 10)"
-				:key="workItem.worksFor.name">
-			<type-work-item
-				v-bind="workItem">
-			</type-work-item>
-			</li>
+				<li
+					v-for="workItem in worksFor"
+					v-if="![
+						'Corporation',
+						'GovernmentOrganization'
+					].includes(workItem.worksFor.type) || [
+						'Corporation',
+						'GovernmentOrganization'
+					].includes(workItem.worksFor.type) && workItem.endDate < (new Date().getFullYear() - 10)"
+					:key="workItem.worksFor.name">
+					<type-work-item
+						v-bind="workItem">
+					</type-work-item>
+				</li>
 			</ul>
 		</section>
 	</template>

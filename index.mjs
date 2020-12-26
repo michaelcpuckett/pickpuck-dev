@@ -151,6 +151,7 @@ const addDownloadLink = html => {
   downloadLinkEl.style.backgroundColor = 'var(--swatch-text-color)'
   downloadLinkEl.style.color = 'var(--swatch-background-color)'
   downloadLinkEl.style.padding = '5px 10px'
+  downloadLinkEl.setAttribute('data-hide-from-print', '')
   window.document.body.appendChild(downloadLinkEl)
 }
 

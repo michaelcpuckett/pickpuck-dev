@@ -6,6 +6,17 @@
 	-webkit-tap-highlight-color: transparent;
 }
 
+@page {
+	size: letter;
+  margin: 1in;
+}
+
+@media print {
+	* {
+    color: black;
+  }
+}
+
 :root {
 	font-family: 'Helvetica Neue', sans-serif;
 	line-height: 1.5;
@@ -16,9 +27,11 @@
 	--swatch-dark-gray: #797979;
 	--swatch-interactive: blue;
 	--swatch-interactive-completed: purple;
+	--swatch-focused: #63ADE5;
 }
 
-/* @media (prefers-color-scheme: dark) {
+/*
+@media (prefers-color-scheme: dark) {
 	:root {
     --swatch-text-color: white;
     --swatch-background-color: #0b0b0b;
@@ -27,7 +40,8 @@
     --swatch-interactive: #81D9FE;
 	  --swatch-interactive-completed: #BA55F1;
 	}
-} */
+}
+*/
 
 html,
 body {
@@ -41,9 +55,16 @@ body {
 	font-size: large;
 }
 
+@media print {
+  body {
+    font-size: medium;
+		line-height: 1.4;
+  }
+}
+
 main {
 	width: 100%;
-	max-width: 620px;
+	max-width: 680px;
 	margin: 0 auto;
 	padding: 10px;
 }
@@ -55,53 +76,10 @@ main {
 }
 
 @media print {
-  :root {
-    line-height: 1.5 !important;
-  }
-  * {
-    color: black !important;
-  }
-  body {
-    font-size: .95em !important;
-  }
-  [data-hide-from-print] {
-    display: none !important;
-  }
   main {
-    padding: 0 !important;
+    padding: 0;
     max-width: 100%;
-  }
-  header {
-    padding-top: 0 !important;
-  }
-  h1 {
-    margin-top: 0 !important;
-  }
-  details {
-    page-break-inside: avoid;
-    padding: 0 !important;
-  }
-  summary {
-  	padding-bottom: 14px !important;
-  }
-  summary::marker,
-  summary::-webkit-details-marker {
-    display: none;
-  }
-  summary > span {
-    display: grid !important;
-    width: 100% !important;
-    float: none !important;
-    padding: 0 !important;
-  }
-  .work-description,
-  .education-description,
-  .skill-description {
-    padding-left: 0 !important;
-  }
-  .person-description {
-    margin-bottom: 0 !important;
-  }
+	}
 }
 
 header,
@@ -113,6 +91,28 @@ section {
   header {
     text-align: center;
   }
+}
+
+@media print {
+  header {
+    padding-top: 0;
+	}
+
+	.section-skills {
+		page-break-before: always;
+	}
+}
+
+/* hidden items */
+
+[hidden] {
+  display: none !important;
+}
+
+@media print {
+	[data-hide-from-print] {
+    display: none !important;
+	}
 }
 
 .visually-hidden {
@@ -127,14 +127,38 @@ section {
   padding: 0;
 }
 
+/* focus styles */
+
+:focus {
+	outline: 0;
+}
+
+:focus-visible,
+summary:focus-visible > span {
+	border-radius: 2px;
+	box-shadow:
+		0 0 0 2px var(--swatch-background-color),
+		0 0 0 6px var(--swatch-focused);
+}
+
+summary:focus-visible {
+	box-shadow: none;
+	border-radius: 0;
+}
+
+/* headings */
+
 h1,
 h2,
-h3,
-h4,
-h5,
-h6 {
+h3 {
 	font-weight: normal;
 	line-height: inherit;
+}
+
+@media print {
+  h1 {
+    margin-top: 0;
+	}
 }
 
 h2 {
@@ -144,9 +168,7 @@ h2 {
 	border-bottom: 1px solid var(--swatch-light-gray);
 }
 
-h3 {
-  font: inherit;
-}
+/* interactive items */
 
 button {
   appearance: none;
@@ -176,40 +198,40 @@ a:visited {
 	color: var(--swatch-interactive-completed);
 }
 
+/* <details>/<summary> */
+
 details {
   margin: 20px 0;
+}
+
+@media print {
+  details {
+    page-break-inside: avoid;
+    padding: 0;
+  }
+}
+
+details .property-description {
+	border-bottom: 1px solid var(--swatch-light-gray);
+}
+
+details p {
+	margin: 0 0 24px 0;
 }
 
 summary {
 	cursor: pointer;
   border-bottom: 1px solid transparent;
 	padding-bottom: 20px;
+  list-style: none;
 }
 
-summary:after {
-	content: '';
-	clear: both;
-	display: grid;
+summary::marker {
+	display: none;
 }
 
-summary::marker,
 summary::-webkit-details-marker {
-	color: var(--swatch-interactive);
-}
-
-:focus,
-summary:focus > span {
-	outline: 0;
-	box-shadow: 0 0 0 2px var(--swatch-interactive);
-}
-
-summary:focus {
-	box-shadow: none;
-}
-
-details[open] summary::marker,
-details[open] summary::-webkit-details-marker {
-	color: var(--swatch-interactive-completed);
+	display: none;
 }
 
 details:not([open]) summary {
@@ -220,54 +242,123 @@ summary span {
   display: block;
 }
 
-summary > span {
+@media print {
+	summary {
+		padding-bottom: 14px;
+	}
+
+	summary:before {
+		display: none;
+	}
+}
+
+.item {
 	display: grid;
-	width: calc(100% - 20px);
-	float: right;
+	color: var(--swatch-dark-gray);
+	list-style: none;
+	width: 100%;
+	grid-template-columns: 20px minmax(0, 1fr);
+	grid-column-gap: 4px;
+}
+
+.item:before {
+	content: '►';
+	color: var(--swatch-interactive);
+	width: 20px;
+	font-size: .9em;
+	height: 20px;
+	margin-top: 2px;
+	transform-origin: 0 0;
+}
+
+details[open] .item:before {
+	transform: rotate(90deg) translate(4px, -20px);
+	color: var(--swatch-interactive-completed);
+}
+
+@media print {
+	.item {
+		grid-template-columns: 1fr;
+	}
+
+	.item:before {
+		content: none;
+	}
 }
 
 @media (min-width: 480px) {
-	summary > span {
-		grid-template-columns: minmax(50%, max-content) minmax(50%, max-content);
+	.item > span {
+		display: grid;
+		grid-column-gap: 4px;
+		grid-template-columns: minmax(calc(50% - 4px), max-content) minmax(calc(50% - 4px), max-content);
 		grid-template-rows: max-content max-content;
-    grid-gap: 4px;
 	}
-  summary > span > span:last-of-type {
+
+	.item > span > span:last-of-type {
     text-align: right;
   }
 }
 
-details p {
-	margin: 0 0 24px 0;
+/* lists */
+
+.unstyled-list {
+  list-style: none;
 }
 
-details .property-description {
-	border-bottom: 1px solid var(--swatch-light-gray);
-}
-
-.item {
-	color: var(--swatch-dark-gray);
+.links-list {
+	margin: 0;
+	padding: 0;
 	list-style: none;
 }
+
+@media (min-width: 480px) {
+  .link-item {
+    line-height: 1;
+    display: inline-grid;
+  }
+
+	.link-item:not(:last-of-type) {
+    padding-right: 10px;
+    border-right: 1px solid var(--swatch-dark-gray);
+    margin-right: 10px;
+  }
+}
+
+/* text styles */
 
 .property-name {
 	font-weight: bold;
 	color: var(--swatch-text-color);
+	text-transform: uppercase;
+	letter-spacing: .5px;
 }
 
 .person-name {
   font-size: xx-large;
   font-weight: bold;
-  display: block;
+	display: block;
+	letter-spacing: .5px;
+}
+
+@media (max-width: 479px) {
+	.person-name {
+		line-height: 1.2;
+	}
+}
+
+.property-roleName,
+.property-alternateName {
+	color: var(--swatch-text-color);
 }
 
 .person-jobTitle {
   display: block;
-  font-size: x-large;
-  color: var(--swatch-dark-gray);
   margin: 5px 0;
+	color: var(--swatch-dark-gray);
   letter-spacing: 2px;
-  text-transform: uppercase;
+	text-transform: uppercase;
+  font-size: x-large;
+	line-height: 1;
 }
 
 .person-image {
@@ -284,38 +375,22 @@ details .property-description {
   margin: 20px 0;
 }
 
+@media print {
+  .person-description {
+    margin-bottom: 0;
+  }
+}
+
 .work-description,
 .education-description,
 .skill-description {
-	padding-left: 20px;
+	padding-left: 24px;
 }
 
-.links-list {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.link-item {
-	list-style: none;
-}
-
-@media (min-width: 480px) {
-  .link-item {
-    line-height: 1;
-    display: inline-grid;
+@media print {
+  .work-description,
+  .education-description,
+  .skill-description {
+    padding-left: 0;
   }
-  .link-item:not(:last-of-type) {
-    padding-right: 10px;
-    border-right: 1px solid var(--swatch-dark-gray);
-    margin-right: 10px;
-  }
-}
-
-.unstyled-list {
-  list-style: none;
-}
-
-[hidden] {
-  display: none !important;
 }

@@ -9,44 +9,47 @@
   ">
   <details>
     <summary>
-      <span class="education-item item">
-        <span>
-          <span class="education-institution-name property-name">
-            {{ alumniOf.name }}
-          </span>
-          <span hidden>
-            —
-          </span>
-          <template v-if="alumniOf.address">
-            <span
-              class="education-institution-location property-organization-location"
-              v-for="address in [ alumniOf.address ]">
-              {{ address.addressLocality }}, {{ address.addressRegion }}
+      <span class="education-item item" role="presentation">
+        <span role="presentation">
+          <span role="presentation">
+            <span class="education-institution-name property-name" role="presentation">
+              {{ alumniOf.name }}
             </span>
-          </template>
-        </span>
-        <span hidden>
-          —
-        </span>
-        <span>
-          <span class="education-roleName property-roleName">
-            {{ roleName }}
+            <span hidden>
+              —
+            </span>
+            <template v-if="alumniOf.address">
+              <span
+                class="education-institution-location property-organization-location"
+                v-for="address in [ alumniOf.address ]"
+                role="presentation">
+                {{ address.addressLocality }}, {{ address.addressRegion }}
+              </span>
+            </template>
           </span>
           <span hidden>
             —
           </span>
-          <span class="property-dateRange">
-            <time
-              :datetime="startDate"
-              class="education-startDate property-startDate">
-              {{ startDate }}<!--
-            --></time><!--
-            -->—<!--
-            --><time
-              :datetime="endDate || new Date().getFullYear()"
-              class="education-endDate property-endDate"><!--
-              -->{{ endDate || 'Present' }}
-            </time>
+          <span>
+            <span class="education-roleName property-roleName" role="presentation">
+              {{ roleName }}
+            </span>
+            <span hidden>
+              —
+            </span>
+            <span class="property-dateRange" role="presentation">
+              <time
+                :datetime="startDate"
+                class="education-startDate property-startDate">
+                {{ startDate }}<!--
+              --></time><!--
+              -->—<!--
+              --><time
+                :datetime="endDate || new Date().getFullYear()"
+                class="education-endDate property-endDate"><!--
+                -->{{ endDate || 'Present' }}
+              </time>
+            </span>
           </span>
         </span>
       </span>

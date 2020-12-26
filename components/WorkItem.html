@@ -10,49 +10,52 @@
 	">
 	<details :open="open">
 		<summary>
-			<span class="work-item item">
-        <span>
-          <template
-            v-for="employer in [ worksFor ]"
-            :key="employer.name">
-            <span class="work-employer-name property-name">
-               {{ employer.name }}
-            </span>
-            <span hidden>
-              —
-            </span>
-            <template v-if="employer.address">
-              <span
-                class="work-employer-location property-organization-location"
-                v-for="address in [ employer.address ]">
-                {{ address.addressLocality }}, {{ address.addressRegion }}
+			<span class="work-item item" role="presentation">
+        <span role="presentation">
+          <span role="presentation">
+            <template
+              v-for="employer in [ worksFor ]"
+              :key="employer.name">
+              <span class="work-employer-name property-name" role="presentation">
+                {{ employer.name }}
               </span>
+              <span hidden>
+                —
+              </span>
+              <template v-if="employer.address">
+                <span
+                  class="work-employer-location property-organization-location"
+                  v-for="address in [ employer.address ]"
+                  role="presentation">
+                  {{ address.addressLocality }}, {{ address.addressRegion }}
+                </span>
+              </template>
             </template>
-          </template>
-        </span>
-        <span hidden>
-          —
-        </span>
-        <span>
-          <span class="work-roleName property-roleName">
-            {{ roleName }}
           </span>
           <span hidden>
             —
           </span>
-          <span class="property-dateRange">
-            <time
-              :datetime="startDate"
-              class="work-startDate property-startDate">
-              {{ startDate }}<!--
-            --></time><!--
-            -->—<!--
-            --><time
-              :datetime="endDate || new Date().getFullYear()"
-              class="work-endDate property-endDate"><!--
-              -->{{ endDate || 'Present' }}
-            </time>
-  				</span>
+          <span>
+            <span class="work-roleName property-roleName" role="presentation">
+              {{ roleName }}
+            </span>
+            <span hidden>
+              —
+            </span>
+            <span class="property-dateRange" role="presentation">
+              <time
+                :datetime="startDate"
+                class="work-startDate property-startDate">
+                {{ startDate }}<!--
+              --></time><!--
+              -->—<!--
+              --><time
+                :datetime="endDate || new Date().getFullYear()"
+                class="work-endDate property-endDate"><!--
+                -->{{ endDate || 'Present' }}
+              </time>
+            </span>
+          </span>
         </span>
 			</span>
 		</summary>

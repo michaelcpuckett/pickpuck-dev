@@ -7,16 +7,19 @@
   ">
   <details>
     <summary>
-      <span class="skill-item item">
-        <span>
-          <span class="skill-name property-name">
-            {{ name }}
+      <span class="skill-item item" role="presentation">
+        <span role="presentation">
+          <span role="presentation">
+            <span class="skill-name property-name" role="presentation">
+              {{ name }}
+            </span>
           </span>
-        </span>
-        <span
-          v-if="alternateName"
-          class="skill-alternate-name property-alternate-name">
-          {{ alternateName }}
+          <span
+            v-if="alternateName"
+            class="skill-alternate-name property-alternateName"
+            role="presentation">
+            {{ alternateName }}
+          </span>
         </span>
       </span>
     </summary>
