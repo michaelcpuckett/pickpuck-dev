@@ -40,6 +40,17 @@
 	-webkit-tap-highlight-color: transparent;
 }
 
+@page {
+	size: letter;
+  margin: 1in;
+}
+
+@media print {
+	* {
+    color: black;
+  }
+}
+
 :root {
 	font-family: 'Helvetica Neue', sans-serif;
 	line-height: 1.5;
@@ -50,9 +61,11 @@
 	--swatch-dark-gray: #797979;
 	--swatch-interactive: blue;
 	--swatch-interactive-completed: purple;
+	--swatch-focused: #63ADE5;
 }
 
-/* @media (prefers-color-scheme: dark) {
+/*
+@media (prefers-color-scheme: dark) {
 	:root {
     --swatch-text-color: white;
     --swatch-background-color: #0b0b0b;
@@ -61,7 +74,8 @@
     --swatch-interactive: #81D9FE;
 	  --swatch-interactive-completed: #BA55F1;
 	}
-} */
+}
+*/
 
 html,
 body {
@@ -75,9 +89,16 @@ body {
 	font-size: large;
 }
 
+@media print {
+  body {
+    font-size: medium;
+		line-height: 1.4;
+  }
+}
+
 main {
 	width: 100%;
-	max-width: 620px;
+	max-width: 680px;
 	margin: 0 auto;
 	padding: 10px;
 }
@@ -89,53 +110,10 @@ main {
 }
 
 @media print {
-  :root {
-    line-height: 1.5 !important;
-  }
-  * {
-    color: black !important;
-  }
-  body {
-    font-size: .95em !important;
-  }
-  [data-hide-from-print] {
-    display: none !important;
-  }
   main {
-    padding: 0 !important;
+    padding: 0;
     max-width: 100%;
-  }
-  header {
-    padding-top: 0 !important;
-  }
-  h1 {
-    margin-top: 0 !important;
-  }
-  details {
-    page-break-inside: avoid;
-    padding: 0 !important;
-  }
-  summary {
-  	padding-bottom: 14px !important;
-  }
-  summary::marker,
-  summary::-webkit-details-marker {
-    display: none;
-  }
-  summary > span {
-    display: grid !important;
-    width: 100% !important;
-    float: none !important;
-    padding: 0 !important;
-  }
-  .work-description,
-  .education-description,
-  .skill-description {
-    padding-left: 0 !important;
-  }
-  .person-description {
-    margin-bottom: 0 !important;
-  }
+	}
 }
 
 header,
@@ -147,6 +125,28 @@ section {
   header {
     text-align: center;
   }
+}
+
+@media print {
+  header {
+    padding-top: 0;
+	}
+
+	.section-skills {
+		page-break-before: always;
+	}
+}
+
+/* hidden items */
+
+[hidden] {
+  display: none !important;
+}
+
+@media print {
+	[data-hide-from-print] {
+    display: none !important;
+	}
 }
 
 .visually-hidden {
@@ -161,14 +161,38 @@ section {
   padding: 0;
 }
 
+/* focus styles */
+
+:focus {
+	outline: 0;
+}
+
+:focus-visible,
+summary:focus-visible > span {
+	border-radius: 2px;
+	box-shadow:
+		0 0 0 2px var(--swatch-background-color),
+		0 0 0 6px var(--swatch-focused);
+}
+
+summary:focus-visible {
+	box-shadow: none;
+	border-radius: 0;
+}
+
+/* headings */
+
 h1,
 h2,
-h3,
-h4,
-h5,
-h6 {
+h3 {
 	font-weight: normal;
 	line-height: inherit;
+}
+
+@media print {
+  h1 {
+    margin-top: 0;
+	}
 }
 
 h2 {
@@ -178,9 +202,7 @@ h2 {
 	border-bottom: 1px solid var(--swatch-light-gray);
 }
 
-h3 {
-  font: inherit;
-}
+/* interactive items */
 
 button {
   appearance: none;
@@ -210,40 +232,40 @@ a:visited {
 	color: var(--swatch-interactive-completed);
 }
 
+/* <details>/<summary> */
+
 details {
   margin: 20px 0;
+}
+
+@media print {
+  details {
+    page-break-inside: avoid;
+    padding: 0;
+  }
+}
+
+details .property-description {
+	border-bottom: 1px solid var(--swatch-light-gray);
+}
+
+details p {
+	margin: 0 0 24px 0;
 }
 
 summary {
 	cursor: pointer;
   border-bottom: 1px solid transparent;
 	padding-bottom: 20px;
+  list-style: none;
 }
 
-summary:after {
-	content: '';
-	clear: both;
-	display: grid;
+summary::marker {
+	display: none;
 }
 
-summary::marker,
 summary::-webkit-details-marker {
-	color: var(--swatch-interactive);
-}
-
-:focus,
-summary:focus > span {
-	outline: 0;
-	box-shadow: 0 0 0 2px var(--swatch-interactive);
-}
-
-summary:focus {
-	box-shadow: none;
-}
-
-details[open] summary::marker,
-details[open] summary::-webkit-details-marker {
-	color: var(--swatch-interactive-completed);
+	display: none;
 }
 
 details:not([open]) summary {
@@ -254,54 +276,124 @@ summary span {
   display: block;
 }
 
-summary > span {
+@media print {
+	summary {
+		padding-bottom: 14px;
+	}
+
+	summary:before {
+		display: none;
+	}
+}
+
+.item {
 	display: grid;
-	width: calc(100% - 20px);
-	float: right;
+	color: var(--swatch-dark-gray);
+	list-style: none;
+	width: 100%;
+	grid-template-columns: 20px minmax(0, 1fr);
+	grid-column-gap: 4px;
+}
+
+.item:before {
+	content: '►';
+  font-family: Arial, Helvetica, sans-serif;
+	color: var(--swatch-interactive);
+	width: 20px;
+	font-size: .9em;
+	height: 20px;
+	margin-top: 2px;
+	transform-origin: 0 0;
+}
+
+details[open] .item:before {
+	transform: rotate(90deg) translate(4px, -20px);
+	color: var(--swatch-interactive-completed);
+}
+
+@media print {
+	.item {
+		grid-template-columns: 1fr;
+	}
+
+	.item:before {
+		content: none;
+	}
 }
 
 @media (min-width: 480px) {
-	summary > span {
-		grid-template-columns: minmax(50%, max-content) minmax(50%, max-content);
+	.item > span {
+		display: grid;
+		grid-column-gap: 4px;
+		grid-template-columns: minmax(calc(50% - 4px), max-content) minmax(calc(50% - 4px), max-content);
 		grid-template-rows: max-content max-content;
-    grid-gap: 4px;
 	}
-  summary > span > span:last-of-type {
+
+	.item > span > span:last-of-type {
     text-align: right;
   }
 }
 
-details p {
-	margin: 0 0 24px 0;
+/* lists */
+
+.unstyled-list {
+  list-style: none;
 }
 
-details .property-description {
-	border-bottom: 1px solid var(--swatch-light-gray);
-}
-
-.item {
-	color: var(--swatch-dark-gray);
+.links-list {
+	margin: 0;
+	padding: 0;
 	list-style: none;
 }
+
+@media (min-width: 480px) {
+  .link-item {
+    line-height: 1;
+    display: inline-grid;
+  }
+
+	.link-item:not(:last-of-type) {
+    padding-right: 10px;
+    border-right: 1px solid var(--swatch-dark-gray);
+    margin-right: 10px;
+  }
+}
+
+/* text styles */
 
 .property-name {
 	font-weight: bold;
 	color: var(--swatch-text-color);
+	text-transform: uppercase;
+	letter-spacing: .5px;
 }
 
 .person-name {
   font-size: xx-large;
   font-weight: bold;
-  display: block;
+	display: block;
+	letter-spacing: .5px;
+}
+
+@media (max-width: 479px) {
+	.person-name {
+		line-height: 1.2;
+	}
+}
+
+.property-roleName,
+.property-alternateName {
+	color: var(--swatch-text-color);
 }
 
 .person-jobTitle {
   display: block;
-  font-size: x-large;
-  color: var(--swatch-dark-gray);
   margin: 5px 0;
+	color: var(--swatch-dark-gray);
   letter-spacing: 2px;
-  text-transform: uppercase;
+	text-transform: uppercase;
+  font-size: x-large;
+	line-height: 1;
 }
 
 .person-image {
@@ -318,45 +410,29 @@ details .property-description {
   margin: 20px 0;
 }
 
+@media print {
+  .person-description {
+    margin-bottom: 0;
+  }
+}
+
 .work-description,
 .education-description,
 .skill-description {
-	padding-left: 20px;
+	padding-left: 24px;
 }
 
-.links-list {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.link-item {
-	list-style: none;
-}
-
-@media (min-width: 480px) {
-  .link-item {
-    line-height: 1;
-    display: inline-grid;
+@media print {
+  .work-description,
+  .education-description,
+  .skill-description {
+    padding-left: 0;
   }
-  .link-item:not(:last-of-type) {
-    padding-right: 10px;
-    border-right: 1px solid var(--swatch-dark-gray);
-    margin-right: 10px;
-  }
-}
-
-.unstyled-list {
-  list-style: none;
-}
-
-[hidden] {
-  display: none !important;
 }</style>
       </head>
       <body>
-        <main><div role="presentation"><header><img src="https://pickpuck.com/avatar.jpg" alt="Photograph of Michael Puckett, UI Engineer" aria-hidden="true" draggable="false" width="75" height="75" data-hide-from-print="" class="person-image property-image"> <h1 class="primary-heading"><span class="person-name property-name">
-					Michael Puckett<span class="visually-hidden">,</span></span> <span class="person-jobTitle property-jobTitle">
+        <main><div role="presentation"><header><img src="https://pickpuck.com/avatar.jpg" alt="Photograph of Michael Puckett, UI Engineer" aria-hidden="true" draggable="false" width="75" height="75" data-hide-from-print="" class="person-image property-image"> <h1 class="primary-heading"><span role="presentation" class="person-name property-name">
+					Michael Puckett<span role="presentation" class="visually-hidden">,</span></span> <span role="presentation" class="person-jobTitle property-jobTitle">
 					UI Engineer
 				</span></h1> <p class="person-description property-description">
 				I'm a software engineer currently based in Louisville, KY specializing in building accessible digital experiences.
@@ -370,229 +446,229 @@ details .property-description {
 						linkedin	
 					</a></li> <li class="link-item"><a href="michael-puckett-resume.pdf">
             resume
-					</a></li></ul></header> <section><h2>Work Experience</h2> <ul class="unstyled-list"><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
-               LiveSchool
+					</a></li></ul></header> <section class="section-work-experience"><h2>Work Experience</h2> <ul class="unstyled-list"><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+                LiveSchool
+              </span> <span hidden="hidden">
+                —
+              </span> <span role="presentation" class="work-employer-location property-organization-location">
+                  Nashville, TN
+                </span></span> <span hidden="hidden">
+            —
+          </span> <span><span role="presentation" class="work-roleName property-roleName">
+              Frontend Engineer
             </span> <span hidden="hidden">
               —
-            </span> <span class="work-employer-location property-organization-location">
-                Nashville, TN
-              </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="work-roleName property-roleName">
-            Frontend Engineer
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2018" class="work-startDate property-startDate">
-              2018</time>—<time datetime="2020" class="work-endDate property-endDate">Present
-            </time></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2018" class="work-startDate property-startDate">
+                2018</time>—<time datetime="2020" class="work-endDate property-endDate">Present
+              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
         LiveSchool is a classroom behavior-tracking platform with an audience of teachers, parents, and students.
-      </p></div></details></li><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
-               Humana
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+                Humana
+              </span> <span hidden="hidden">
+                —
+              </span> <span role="presentation" class="work-employer-location property-organization-location">
+                  Louisville, KY
+                </span></span> <span hidden="hidden">
+            —
+          </span> <span><span role="presentation" class="work-roleName property-roleName">
+              Web Developer
             </span> <span hidden="hidden">
               —
-            </span> <span class="work-employer-location property-organization-location">
-                Louisville, KY
-              </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="work-roleName property-roleName">
-            Web Developer
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2016" class="work-startDate property-startDate">
-              2016</time>—<time datetime="2018" class="work-endDate property-endDate">2018
-            </time></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2016" class="work-startDate property-startDate">
+                2016</time>—<time datetime="2018" class="work-endDate property-endDate">2018
+              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
         I built and maintained a library of accessible web components that was shared across many enterprise products.
-      </p></div></details></li><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
-               Apple
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+                Apple
+              </span> <span hidden="hidden">
+                —
+              </span> <span role="presentation" class="work-employer-location property-organization-location">
+                  Cupertino, CA
+                </span></span> <span hidden="hidden">
+            —
+          </span> <span><span role="presentation" class="work-roleName property-roleName">
+              UI Engineer
             </span> <span hidden="hidden">
               —
-            </span> <span class="work-employer-location property-organization-location">
-                Cupertino, CA
-              </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="work-roleName property-roleName">
-            UI Engineer
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2013" class="work-startDate property-startDate">
-              2013</time>—<time datetime="2016" class="work-endDate property-endDate">2016
-            </time></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2013" class="work-startDate property-startDate">
+                2013</time>—<time datetime="2016" class="work-endDate property-endDate">2016
+              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
         I built interfaces to support product launches, campaigns, and transactions on apple.com.
-      </p></div></details></li><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
-               CNN
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+                CNN
+              </span> <span hidden="hidden">
+                —
+              </span> <span role="presentation" class="work-employer-location property-organization-location">
+                  Atlanta, GA
+                </span></span> <span hidden="hidden">
+            —
+          </span> <span><span role="presentation" class="work-roleName property-roleName">
+              Senior Web Developer
             </span> <span hidden="hidden">
               —
-            </span> <span class="work-employer-location property-organization-location">
-                Atlanta, GA
-              </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="work-roleName property-roleName">
-            Senior Web Developer
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2013" class="work-startDate property-startDate">
-              2013</time>—<time datetime="2013" class="work-endDate property-endDate">2013
-            </time></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2013" class="work-startDate property-startDate">
+                2013</time>—<time datetime="2013" class="work-endDate property-endDate">2013
+              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
         I worked on the responsive redesign and replatforming of cnn.com.
-      </p></div></details></li><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
-               iostudio
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+                iostudio
+              </span> <span hidden="hidden">
+                —
+              </span> <span role="presentation" class="work-employer-location property-organization-location">
+                  Nashville, TN
+                </span></span> <span hidden="hidden">
+            —
+          </span> <span><span role="presentation" class="work-roleName property-roleName">
+              Frontend Developer
             </span> <span hidden="hidden">
               —
-            </span> <span class="work-employer-location property-organization-location">
-                Nashville, TN
-              </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="work-roleName property-roleName">
-            Frontend Developer
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2012" class="work-startDate property-startDate">
-              2012</time>—<time datetime="2013" class="work-endDate property-endDate">2013
-            </time></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2012" class="work-startDate property-startDate">
+                2012</time>—<time datetime="2013" class="work-endDate property-endDate">2013
+              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
         I built marketing websites and web apps for national clients, including the National Guard.
-      </p></div></details></li><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
-               Fruit of the Loom
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+                Fruit of the Loom
+              </span> <span hidden="hidden">
+                —
+              </span> <span role="presentation" class="work-employer-location property-organization-location">
+                  Bowling Green, KY
+                </span></span> <span hidden="hidden">
+            —
+          </span> <span><span role="presentation" class="work-roleName property-roleName">
+              Designer/Developer
             </span> <span hidden="hidden">
               —
-            </span> <span class="work-employer-location property-organization-location">
-                Bowling Green, KY
-              </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="work-roleName property-roleName">
-            Designer/Developer
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2011" class="work-startDate property-startDate">
-              2011</time>—<time datetime="2012" class="work-endDate property-endDate">2012
-            </time></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2011" class="work-startDate property-startDate">
+                2011</time>—<time datetime="2012" class="work-endDate property-endDate">2012
+              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
         I designed and developed a relaunch of jerzees.com.
-      </p></div></details></li><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
-               2-Com
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+                2-Com
+              </span> <span hidden="hidden">
+                —
+              </span> <span role="presentation" class="work-employer-location property-organization-location">
+                  Nashville, TN
+                </span></span> <span hidden="hidden">
+            —
+          </span> <span><span role="presentation" class="work-roleName property-roleName">
+              Designer/Developer
             </span> <span hidden="hidden">
               —
-            </span> <span class="work-employer-location property-organization-location">
-                Nashville, TN
-              </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="work-roleName property-roleName">
-            Designer/Developer
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2010" class="work-startDate property-startDate">
-              2010</time>—<time datetime="2012" class="work-endDate property-endDate">2012
-            </time></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2010" class="work-startDate property-startDate">
+                2010</time>—<time datetime="2012" class="work-endDate property-endDate">2012
+              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
         I worked on a web app that generated print marketing materials for small businesses.
-      </p></div></details></li><!----><!----><!----><!----></ul></section> <section><h2>Skills</h2> <ul class="unstyled-list"><li><details><summary><span class="skill-item item"><span><span class="skill-name property-name">
-            JavaScript
-          </span></span> <span class="skill-alternate-name property-alternate-name">
-          Frontend Architecture
-        </span></span></summary> <div class="skill-description property-description"><p>
+      </p></div></details></li><!----><!----><!----><!----></ul></section> <section class="section-skills"><h2>Skills</h2> <ul class="unstyled-list"><li><details><summary><span role="presentation" class="skill-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="skill-name property-name">
+              JavaScript
+            </span></span> <span role="presentation" class="skill-alternate-name property-alternateName">
+            Frontend Architecture
+          </span></span></span></summary> <div class="skill-description property-description"><p>
         I have an advanced understanding of the ES language, including recently added features such as async/await.
       </p><p>
         I have evaluated JavaScript frameworks for use at enterprise scale, balancing various factors, including functionality, ecosystem, and performance.
       </p><p>
         I have architected, deployed, and maintained web apps using Vue.js, React, Svelte, and Can.js.
       </p><p>
-        Although not my primary focus, I have some experience with Node.js, such as implementing frontend build systems.
-      </p></div></details></li><li><details><summary><span class="skill-item item"><span><span class="skill-name property-name">
-            Accessibility
-          </span></span> <span class="skill-alternate-name property-alternate-name">
-          ADA/Section 508 Compliance
-        </span></span></summary> <div class="skill-description property-description"><p>
+        Although not my primary focus, I have some experience with Node.js, including implementing frontend build systems.
+      </p></div></details></li><li><details><summary><span role="presentation" class="skill-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="skill-name property-name">
+              Accessibility
+            </span></span> <span role="presentation" class="skill-alternate-name property-alternateName">
+            ADA/Section 508 Compliance
+          </span></span></span></summary> <div class="skill-description property-description"><p>
         To accommodate all users, including those using assistive technologies, such as screen readers or voice control, I implement semantic markup using ARIA and follow WCAG best practices.
       </p><p>
         I have worked on websites subject to Section 508 of the US Rehabilitation Act, where the code I wrote needed to pass legal standards in regards to accessibility. This included manual testing, user testing, and ongoing accessibility audits.
-      </p></div></details></li><li><details><summary><span class="skill-item item"><span><span class="skill-name property-name">
-            Design Systems
-          </span></span> <span class="skill-alternate-name property-alternate-name">
-          Styleguide Engineering
-        </span></span></summary> <div class="skill-description property-description"><p>
+      </p></div></details></li><li><details><summary><span role="presentation" class="skill-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="skill-name property-name">
+              Design Systems
+            </span></span> <span role="presentation" class="skill-alternate-name property-alternateName">
+            Styleguide Engineering
+          </span></span></span></summary> <div class="skill-description property-description"><p>
         My educational background in graphic design allows me to collaborate closely with designers and translate their intent into code.
       </p><p>
         I have led successful projects to standardize, componentize, and document complex design systems for use by large cross-functional teams.
       </p><p>
         I've found that developers can better communicate with designers by building a living library of reusable components that acts as a shared visual vocabulary.
-      </p></div></details></li></ul></section> <section data-hide-from-print=""><h2>Past Projects</h2> <ul class="unstyled-list"><!----><!----><!----><!----><!----><!----><!----><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
-               Imagewest
+      </p></div></details></li></ul></section> <section data-hide-from-print="" class="section-past-projects"><h2>Past Projects</h2> <ul class="unstyled-list"><!----><!----><!----><!----><!----><!----><!----><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+                Imagewest
+              </span> <span hidden="hidden">
+                —
+              </span> <span role="presentation" class="work-employer-location property-organization-location">
+                  Bowling Green, KY
+                </span></span> <span hidden="hidden">
+            —
+          </span> <span><span role="presentation" class="work-roleName property-roleName">
+              Jr. Designer/Developer
             </span> <span hidden="hidden">
               —
-            </span> <span class="work-employer-location property-organization-location">
-                Bowling Green, KY
-              </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="work-roleName property-roleName">
-            Jr. Designer/Developer
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2010" class="work-startDate property-startDate">
-              2010</time>—<time datetime="2012" class="work-endDate property-endDate">2012
-            </time></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2010" class="work-startDate property-startDate">
+                2010</time>—<time datetime="2012" class="work-endDate property-endDate">2012
+              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
         I designed logos, brochures, signage and websites for local clients with a team of junior designers.
-      </p></div></details></li><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
-               Bowling Green, KY Area Convention and Visitors Bureau
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+                Bowling Green, KY Area Convention and Visitors Bureau
+              </span> <span hidden="hidden">
+                —
+              </span> <span role="presentation" class="work-employer-location property-organization-location">
+                  Bowling Green, KY
+                </span></span> <span hidden="hidden">
+            —
+          </span> <span><span role="presentation" class="work-roleName property-roleName">
+              Design/Development Intern
             </span> <span hidden="hidden">
               —
-            </span> <span class="work-employer-location property-organization-location">
-                Bowling Green, KY
-              </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="work-roleName property-roleName">
-            Design/Development Intern
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2009" class="work-startDate property-startDate">
-              2009</time>—<time datetime="2009" class="work-endDate property-endDate">2009
-            </time></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2009" class="work-startDate property-startDate">
+                2009</time>—<time datetime="2009" class="work-endDate property-endDate">2009
+              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
         I launched a website overhaul that increased search engine rankings.
-      </p></div></details></li><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
-               City of Bowling Green, KY
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+                City of Bowling Green, KY
+              </span> <span hidden="hidden">
+                —
+              </span> <span role="presentation" class="work-employer-location property-organization-location">
+                  Bowling Green, KY
+                </span></span> <span hidden="hidden">
+            —
+          </span> <span><span role="presentation" class="work-roleName property-roleName">
+              Design/Development Intern
             </span> <span hidden="hidden">
               —
-            </span> <span class="work-employer-location property-organization-location">
-                Bowling Green, KY
-              </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="work-roleName property-roleName">
-            Design/Development Intern
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2008" class="work-startDate property-startDate">
-              2008</time>—<time datetime="2009" class="work-endDate property-endDate">2009
-            </time></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2008" class="work-startDate property-startDate">
+                2008</time>—<time datetime="2009" class="work-endDate property-endDate">2009
+              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
         I assisted in managing a 10,000-page website serving 50,000 constituents.
-      </p></div></details></li><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
-               Rise Over Run Magazine
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+                Rise Over Run Magazine
+              </span> <span hidden="hidden">
+                —
+              </span> <span role="presentation" class="work-employer-location property-organization-location">
+                  Bowling Green, KY
+                </span></span> <span hidden="hidden">
+            —
+          </span> <span><span role="presentation" class="work-roleName property-roleName">
+              Founder/Editor-in-Chief
             </span> <span hidden="hidden">
               —
-            </span> <span class="work-employer-location property-organization-location">
-                Bowling Green, KY
-              </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="work-roleName property-roleName">
-            Founder/Editor-in-Chief
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2007" class="work-startDate property-startDate">
-              2007</time>—<time datetime="2009" class="work-endDate property-endDate">2009
-            </time></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2007" class="work-startDate property-startDate">
+                2007</time>—<time datetime="2009" class="work-endDate property-endDate">2009
+              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
         I started an online culture magazine that covered my local community. I built and maintained the website, produced and edited online content, art directed photo shoots, coordinated fundraising events, and managed a staff of student writers, photographers and videographers.
       </p><p>
         The magazine won the 2007 Society of Professional Journalists Mark of Excellence Award for "Best All-Around Independent Online Student Publication."
-      </p></div></details></li></ul></section> <section><h2>Education</h2> <ul class="unstyled-list"><li><details><summary><span class="education-item item"><span><span class="education-institution-name property-name">
-            Western Kentucky University
-          </span> <span hidden="hidden">
+      </p></div></details></li></ul></section> <section class="section-education"><h2>Education</h2> <ul class="unstyled-list"><li><details><summary><span role="presentation" class="education-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="education-institution-name property-name">
+              Western Kentucky University
+            </span> <span hidden="hidden">
+              —
+            </span> <span role="presentation" class="education-institution-location property-organization-location">
+                Bowling Green, KY
+              </span></span> <span hidden="hidden">
             —
-          </span> <span class="education-institution-location property-organization-location">
-              Bowling Green, KY
-            </span></span> <span hidden="hidden">
-          —
-        </span> <span><span class="education-roleName property-roleName">
-            Advertising &amp; Graphic Design
-          </span> <span hidden="hidden">
-            —
-          </span> <span class="property-dateRange"><time datetime="2005" class="education-startDate property-startDate">
-              2005</time>—<time datetime="2009" class="education-endDate property-endDate">2009
-            </time></span></span></span></summary> <div class="education-description property-description"><p>
+          </span> <span><span role="presentation" class="education-roleName property-roleName">
+              Advertising &amp; Graphic Design
+            </span> <span hidden="hidden">
+              —
+            </span> <span role="presentation" class="property-dateRange"><time datetime="2005" class="education-startDate property-startDate">
+                2005</time>—<time datetime="2009" class="education-endDate property-endDate">2009
+              </time></span></span></span></span></summary> <div class="education-description property-description"><p>
         Bachelor of Arts, 3.9 GPA
       </p></div></details></li></ul></section></div></main><script type="application/ld+json">
     {
@@ -852,7 +928,7 @@ details .property-description {
 		      "I have an advanced understanding of the ES language, including recently added features such as async/await.",
           "I have evaluated JavaScript frameworks for use at enterprise scale, balancing various factors, including functionality, ecosystem, and performance.",
           "I have architected, deployed, and maintained web apps using Vue.js, React, Svelte, and Can.js.",
-          "Although not my primary focus, I have some experience with Node.js, such as implementing frontend build systems."
+          "Although not my primary focus, I have some experience with Node.js, including implementing frontend build systems."
         ]
       }, {
         "@type": "Thing",
