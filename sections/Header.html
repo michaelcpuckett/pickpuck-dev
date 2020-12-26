@@ -10,6 +10,7 @@
         draggable="false"
         width="75"
         height="75"
+        data-hide-from-print
       />
 			<h1 class="primary-heading">
 				<span class="person-name property-name">
@@ -22,7 +23,7 @@
 			<p class="person-description property-description">
 				{{ description }}
 			</p>
-			<ul class="links-list">
+			<ul class="links-list" data-hide-from-print>
 				<li class="link-item">
 					<a :href="'mailto:' + email + '?subject=yo'">
 						email
@@ -36,6 +37,11 @@
 						:href="link">
 						{{ new URL(link).hostname.split('.com').shift() }}	
 					</a>
+				</li>
+				<li class="link-item">
+					<button type="button" onclick="print()">
+            resume
+					</button>
 				</li>
 			</ul>
 		</header>

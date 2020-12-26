@@ -14,7 +14,25 @@
 
 
 
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Michael Puckett - UI Engineer - CV</title><meta name="description" content="I'm a software engineer currently based in Louisville, KY specializing in building accessible digital experiences."><link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any"><style>* {
+
+<script>
+  ;(() => {
+    window.matchMedia('print').addListener(({ matches }) => {
+      if (matches) {
+        const detailsEls = [...window.document.querySelectorAll('details')]
+        const openDetailsEls = detailsEls.filter(el => el.hasAttribute('open'))
+        openDetailsEls.forEach(el => el.setAttribute('data-open', ''))
+        detailsEls.forEach(el => el.setAttribute('open', ''))
+      } else {
+        const detailsEls = [...window.document.querySelectorAll('details')]
+        const openDetailsEls = detailsEls.filter(el => el.hasAttribute('data-open'))
+        const closedDetailsEls = detailsEls.filter(el => !el.hasAttribute('data-open'))
+        closedDetailsEls.forEach(el => el.removeAttribute('open'))
+        openDetailsEls.forEach(el => el.removeAttribute('data-open'))
+      }
+    })
+  })()
+</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Michael Puckett - UI Engineer - CV</title><meta name="description" content="I'm a software engineer currently based in Louisville, KY specializing in building accessible digital experiences."><link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any"><style>* {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
@@ -70,6 +88,53 @@ main {
 	} 
 }
 
+@media print {
+  :root {
+    line-height: 1.5 !important;
+  }
+  body {
+    font-size: .95em !important;
+  }
+  [data-hide-from-print] {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+    max-width: 100%;
+  }
+  header {
+    padding-top: 0 !important;
+  }
+  h1 {
+    margin-top: 0 !important;
+  }
+  details {
+    page-break-inside: avoid;
+    padding: 0 !important;
+  }
+  summary {
+  	padding-bottom: 14px !important;
+  }
+  summary::marker,
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary > span {
+    display: grid !important;
+    width: 100% !important;
+    float: none !important;
+    padding: 0 !important;
+  }
+  .work-description,
+  .education-description,
+  .skill-description {
+    padding-left: 0 !important;
+  }
+  .person-description {
+    margin-bottom: 0 !important;
+  }
+}
+
 header,
 section {
 	padding: 20px;
@@ -114,7 +179,21 @@ h3 {
   font: inherit;
 }
 
-a {
+button {
+  appearance: none;
+  -webkit-appearance: none;
+  font: inherit;
+  line-height: inherit;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--swatch-interactive);
+}
+
+a,
+button {
   text-decoration: none;
   border-bottom: 1px solid;
   padding-bottom: 2px;
@@ -273,12 +352,12 @@ details .property-description {
 }</style>
       </head>
       <body>
-        <main><div role="presentation"><header><img src="https://pickpuck.com/avatar.jpg" alt="Photograph of Michael Puckett, UI Engineer" aria-hidden="true" draggable="false" width="75" height="75" class="person-image property-image"> <h1 class="primary-heading"><span class="person-name property-name">
+        <main><div role="presentation"><header><img src="https://pickpuck.com/avatar.jpg" alt="Photograph of Michael Puckett, UI Engineer" aria-hidden="true" draggable="false" width="75" height="75" data-hide-from-print="" class="person-image property-image"> <h1 class="primary-heading"><span class="person-name property-name">
 					Michael Puckett<span class="visually-hidden">,</span></span> <span class="person-jobTitle property-jobTitle">
 					UI Engineer
 				</span></h1> <p class="person-description property-description">
 				I'm a software engineer currently based in Louisville, KY specializing in building accessible digital experiences.
-			</p> <ul class="links-list"><li class="link-item"><a href="mailto:michaelcpuckett@gmail.com?subject=yo">
+			</p> <ul data-hide-from-print="" class="links-list"><li class="link-item"><a href="mailto:michaelcpuckett@gmail.com?subject=yo">
 						email
 					</a></li> <li class="link-item"><a href="https://github.com/michaelcpuckett">
 						github	
@@ -286,7 +365,9 @@ details .property-description {
 						stackoverflow	
 					</a></li><li class="link-item"><a href="https://linkedin.com/in/michaelcpuckett">
 						linkedin	
-					</a></li></ul></header> <section><h2>Work Experience</h2> <ul class="unstyled-list"><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
+					</a></li> <li class="link-item"><button type="button" onclick="print()">
+            resume
+					</button></li></ul></header> <section><h2>Work Experience</h2> <ul class="unstyled-list"><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
                LiveSchool
             </span> <span hidden="hidden">
               —
@@ -428,7 +509,7 @@ details .property-description {
         I have led successful projects to standardize, componentize, and document complex design systems for use by large cross-functional teams.
       </p><p>
         I've found that developers can better communicate with designers by building a living library of reusable components that acts as a shared visual vocabulary.
-      </p></div></details></li></ul></section> <section><h2>Past Projects</h2> <ul class="unstyled-list"><!----><!----><!----><!----><!----><!----><!----><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
+      </p></div></details></li></ul></section> <section data-hide-from-print=""><h2>Past Projects</h2> <ul class="unstyled-list"><!----><!----><!----><!----><!----><!----><!----><li><details><summary><span class="work-item item"><span><span class="work-employer-name property-name">
                Imagewest
             </span> <span hidden="hidden">
               —
