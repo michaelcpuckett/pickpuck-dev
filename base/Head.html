@@ -2,8 +2,12 @@
   <data v-for="{ name, jobTitle, description } in [ config ]">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ name }} - {{ jobTitle }} - CV</title>
+    <meta name="web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" :content="name" />
     <meta name="description" :content="description" />
+    <title>{{ name }} - {{ jobTitle }} - CV</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any" />
     <link rel="apple-touch-icon" href="favicon.png" />
     <link rel="stylesheet" href="styles/index.css" />
