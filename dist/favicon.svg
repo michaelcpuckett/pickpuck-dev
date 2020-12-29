@@ -1,12 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 1080 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-    <g transform="matrix(0.858571,0,0,0.858571,60.0271,81.0613)">
-        <g transform="matrix(14.1255,0,0,19.1639,-4964.75,-17319.1)">
-            <text x="354.552px" y="957.085px" style="font-family:'BodoniSvtyTwoOSITCTT-Book', 'Bodoni 72 Oldstyle';font-size:73.357px;">M</text>
-        </g>
-        <g transform="matrix(2.16777,0,0,2.57134,-298.724,-1443.12)">
-            <text x="354.552px" y="957.085px" style="font-family:'BodoniSvtyTwoOSITCTT-Book', 'Bodoni 72 Oldstyle';font-size:542.915px;">P</text>
-        </g>
-    </g>
+<?xml version="1.0" encoding="UTF-8" ?>
+<svg
+  width="100%"
+  height="100%"
+  viewBox="0 0 1400 1400"
+  version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xml:space="preserve"
+  style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+  <style>
+    @media (prefers-color-scheme: light) {
+      path {
+        --favicon-color: black;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      path {
+        --favicon-color: white;
+      }
+    }
+  </style>
+  <path
+    d="M700,89.96C1036.69,89.96 1310.04,363.31 1310.04,700C1310.04,1036.69 1036.69,1310.04 700,1310.04C363.31,1310.04 89.96,1036.69 89.96,700C89.96,363.31 363.31,89.96 700,89.96ZM380.8,271.6L380.8,1128.4L494.8,1128.4L494.8,778L756.4,778C842.8,778.8 908.2,756.8 952.6,712C997,667.2 1019.2,604.8 1019.2,524.8C1019.2,444.8 997,382.6 952.6,338.2C908.2,293.8 842.8,271.6 756.4,271.6L380.8,271.6ZM494.8,682L494.8,367.6L718,367.6C782.8,367.6 830.2,381 860.2,407.8C890.2,434.6 905.2,473.6 905.2,524.8C905.2,576 890.2,615.2 860.2,642.4C830.2,669.6 782.8,682.8 718,682L494.8,682Z"
+    style="fill:rgb(158,158,158); fill:var(--favicon-color, rgb(158,158,158));"
+  />
 </svg>
