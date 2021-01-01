@@ -11,12 +11,17 @@
 	<details :open="open">
 		<summary>
 			<span class="work-item item" role="presentation">
+        <span class="item-bullet" aria-hidden="true">
+          ►
+        </span>
         <span role="presentation">
           <span role="presentation">
             <template
               v-for="employer in [ worksFor ]"
               :key="employer.name">
-              <span class="work-employer-name property-name" role="presentation">
+              <span
+                class="work-employer-name property-name"
+                role="presentation">
                 {{ employer.name }}
               </span>
               <span hidden>
@@ -42,18 +47,30 @@
             <span hidden>
               —
             </span>
-            <span class="property-dateRange" role="presentation">
-              <time
-                :datetime="startDate"
-                class="work-startDate property-startDate">
-                {{ startDate }}<!--
-              --></time><!--
-              -->—<!--
-              --><time
-                :datetime="endDate || new Date().getFullYear()"
-                class="work-endDate property-endDate"><!--
-                -->{{ endDate || 'Present' }}
-              </time>
+            <span
+              class="property-dateRange"
+              role="presentation">
+              <span class="visually-hidden" role="presentation">
+                {{ startDate }}
+                <template v-if="startDate !== endDate">
+                  through {{ (endDate || 'Present') }}
+                </template>
+              </span>
+              <span aria-hidden="true">
+                <time
+                  :datetime="startDate"
+                  class="work-startDate property-startDate">
+                  {{ startDate }}<!--
+                --></time><!--
+                --><template v-if="startDate !== endDate"><!--
+                  -->—<!--
+                  --><time
+                    :datetime="endDate || new Date().getFullYear()"
+                    class="work-endDate property-endDate"><!--
+                    -->{{ endDate || 'Present' }}
+                  </time>
+                </template>
+              </span>
             </span>
           </span>
         </span>

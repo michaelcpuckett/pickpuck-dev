@@ -116,7 +116,6 @@ section {
   width: 1px;
   height: 1px;
   white-space: nowrap;
-  visibility: hidden;
   clip: rect(0 0 0 0);
   margin: -1px;
   border: 0;
@@ -268,8 +267,7 @@ summary span {
 	grid-column-gap: 4px;
 }
 
-.item:before {
-	content: '►';
+.item-bullet {
   font-family: Arial, Helvetica, sans-serif;
 	color: var(--swatch-interactive);
 	width: 20px;
@@ -279,7 +277,7 @@ summary span {
 	transform-origin: 0 0;
 }
 
-details[open] .item:before {
+details[open] .item-bullet {
 	transform: rotate(90deg) translate(4px, -20px);
 	color: var(--swatch-interactive-completed);
 }
@@ -400,4 +398,8 @@ details[open] .item:before {
   .skill-description {
     padding-left: 0;
   }
+}
+
+.property-dateRange span {
+  display: inline;
 }
