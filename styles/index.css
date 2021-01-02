@@ -7,15 +7,15 @@
 	-webkit-tap-highlight-color: transparent;
 }
 
-@page {
-	size: letter;
-  margin: 1in;
-}
-
 @media print {
 	* {
     color: black;
   }
+
+	@page {
+		size: letter;
+		margin: .875in;
+	}
 }
 
 :root {
@@ -56,12 +56,6 @@ body {
 	line-height: 1.4;
 }
 
-@media print {
-  body {
-		font-size: larger;
-  }
-}
-
 main {
 	width: 100%;
 	max-width: 600px;
@@ -74,7 +68,8 @@ main {
 @media print {
   main {
     padding: 0;
-    max-width: 100%;
+		max-width: 100%;
+		grid-gap: 3em;
 	}
 }
 
@@ -206,12 +201,6 @@ a:visited {
 
 details {
 	font-size: smaller;
-}
-
-@media print {
-  details {
-    page-break-inside: avoid;
-  }
 }
 
 details .property-description {
@@ -400,7 +389,7 @@ details[open] .item-bullet {
   .education-description,
   .skill-description {
     padding-left: 0;
-  }
+	}
 }
 
 .property-dateRange span {

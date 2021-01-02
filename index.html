@@ -63,17 +63,7 @@
     window.matchMedia('print').addListener(({ matches }) => {
       if (matches) {
         const detailsEls = [...window.document.querySelectorAll('details')]
-        const openDetailsEls = detailsEls.filter(el => el.hasAttribute('open'))
-        openDetailsEls.forEach(el => el.setAttribute('data-open', ''))
         detailsEls.forEach(el => el.setAttribute('open', ''))
-      } else {
-        setTimeout(() => {
-          const detailsEls = [...window.document.querySelectorAll('details')]
-          const openDetailsEls = detailsEls.filter(el => el.hasAttribute('data-open'))
-          const closedDetailsEls = detailsEls.filter(el => !el.hasAttribute('data-open'))
-          closedDetailsEls.forEach(el => el.removeAttribute('open'))
-          openDetailsEls.forEach(el => el.removeAttribute('data-open'))
-        }, 200)
       }
     })
   })()

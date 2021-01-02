@@ -14,43 +14,33 @@
 
 
 
-
 <script>
   ;(() => {
     window.matchMedia('print').addListener(({ matches }) => {
       if (matches) {
         const detailsEls = [...window.document.querySelectorAll('details')]
-        const openDetailsEls = detailsEls.filter(el => el.hasAttribute('open'))
-        openDetailsEls.forEach(el => el.setAttribute('data-open', ''))
         detailsEls.forEach(el => el.setAttribute('open', ''))
-      } else {
-        setTimeout(() => {
-          const detailsEls = [...window.document.querySelectorAll('details')]
-          const openDetailsEls = detailsEls.filter(el => el.hasAttribute('data-open'))
-          const closedDetailsEls = detailsEls.filter(el => !el.hasAttribute('data-open'))
-          closedDetailsEls.forEach(el => el.removeAttribute('open'))
-          openDetailsEls.forEach(el => el.removeAttribute('data-open'))
-        }, 200)
       }
     })
   })()
-</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Michael Puckett"><meta name="description" content="I'm a creative technologist currently based in Louisville, KY specializing in building accessible digital experiences."><title>Michael Puckett - UI/UX Engineer - CV</title><link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any"><link rel="apple-touch-icon" href="favicon.png"><style>* {
+</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Michael Puckett"><meta name="description"><title>Michael Puckett - UI/UX Engineer - CV</title><link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any"><link rel="apple-touch-icon" href="favicon.png"><style>* {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	list-style: none;
 	-webkit-text-size-adjust: 100%;
 	-webkit-tap-highlight-color: transparent;
-}
-
-@page {
-	size: letter;
-  margin: 1in;
 }
 
 @media print {
 	* {
     color: black;
   }
+
+	@page {
+		size: letter;
+		margin: .875in;
+	}
 }
 
 :root {
@@ -88,51 +78,41 @@ body {
 	background: var(--swatch-background-color);
 	background-attachment: fixed;
 	color: var(--swatch-text-color);
-	font-size: large;
-}
-
-@media print {
-  body {
-    font-size: medium;
-		line-height: 1.4;
-  }
+	line-height: 1.4;
 }
 
 main {
 	width: 100%;
-	max-width: 680px;
+	max-width: 600px;
 	margin: 0 auto;
-	padding: 10px;
-}
-
-@media print, screen and (min-width: 480px) {
-	main {     
-	  padding: 20px 40px;
-	} 
+	padding: 2em;
+	display: grid;
+	grid-gap: 4em;
 }
 
 @media print {
   main {
     padding: 0;
-    max-width: 100%;
+		max-width: 100%;
+		grid-gap: 3em;
 	}
 }
 
-header,
+header {
+	display: grid;
+	grid-gap: 1em;
+	grid-template-columns: 1fr;
+	font-size: larger;
+}
+
+@media print, screen and (min-width: 640px) {
+	header {
+		grid-template-columns: max-content max-content 1fr;
+	}
+}
+
 section {
-	padding: 20px;
-}
-
-@media print, screen and (min-width: 480px) {
-  header {
-    text-align: center;
-  }
-}
-
-@media print {
-  header {
-    padding-top: 0;
-	}
+	font-size: larger;
 }
 
 /* hidden items */
@@ -152,7 +132,6 @@ section {
   width: 1px;
   height: 1px;
   white-space: nowrap;
-  visibility: hidden;
   clip: rect(0 0 0 0);
   margin: -1px;
   border: 0;
@@ -175,18 +154,11 @@ section {
 	outline: 0;
 }
 
-:focus-visible,
-summary:focus-visible > span {
+:focus-visible {
 	outline: 0;
 	border-radius: 2px;
 	box-shadow:
-		0 0 0 2px var(--swatch-background-color),
-		0 0 0 6px var(--swatch-focused);
-}
-
-summary:focus-visible {
-	box-shadow: none;
-	border-radius: 0;
+		0 0 0 4px var(--swatch-focused);
 }
 
 /* headings */
@@ -198,16 +170,25 @@ h3 {
 	line-height: inherit;
 }
 
-@media print {
-  h1 {
-    margin-top: 0;
+h1 {
+	display: grid;
+	align-content: stretch;
+	align-items: center;
+	justify-self: flex-start;
+	font-size: larger;
+	grid-row-gap: .5em;
+}
+
+@media screen and (min-width: 640px) {
+	h1 {
+		grid-row-gap: 0;
 	}
 }
 
 h2 {
-	font-size: x-large;
-	margin-bottom: .75em;
-	padding-bottom: .25em;
+	line-height: 1;
+	font-size: larger;
+	padding-bottom: .5em;
 	border-bottom: 1px solid var(--swatch-light-gray);
 }
 
@@ -244,14 +225,7 @@ a:visited {
 /* <details>/<summary> */
 
 details {
-  margin: 20px 0;
-}
-
-@media print {
-  details {
-    page-break-inside: avoid;
-    padding: 0;
-  }
+	font-size: smaller;
 }
 
 details .property-description {
@@ -265,7 +239,8 @@ details p {
 summary {
 	cursor: pointer;
   border-bottom: 1px solid transparent;
-	padding-bottom: 20px;
+	padding-bottom: 1em;
+	padding-top: 1em;
   list-style: none;
 }
 
@@ -285,38 +260,25 @@ summary span {
   display: block;
 }
 
-@media print {
-	summary {
-		padding-bottom: 14px;
-	}
-
-	summary:before {
-		display: none;
-	}
-}
-
 .item {
 	display: grid;
 	color: var(--swatch-dark-gray);
 	list-style: none;
 	width: 100%;
-	grid-template-columns: 20px minmax(0, 1fr);
-	grid-column-gap: 4px;
+	grid-template-columns: max-content minmax(0, 1fr);
+	grid-column-gap: 6px;
 }
 
-.item:before {
-	content: '►';
+.item-bullet {
   font-family: Arial, Helvetica, sans-serif;
 	color: var(--swatch-interactive);
-	width: 20px;
-	font-size: .9em;
-	height: 20px;
+	font-size: smaller;
 	margin-top: 1px;
 	transform-origin: 0 0;
 }
 
-details[open] .item:before {
-	transform: rotate(90deg) translate(4px, -20px);
+details[open] .item-bullet {
+	transform: rotate(90deg) translate(3px, -1em);
 	color: var(--swatch-interactive-completed);
 }
 
@@ -325,20 +287,19 @@ details[open] .item:before {
 		grid-template-columns: 1fr;
 	}
 
-	.item:before {
-		content: none;
+	.item-bullet {
+		display: none;
 	}
 }
 
-@media print, screen and (min-width: 480px) {
-	.item > span {
+@media print, screen and (min-width: 640px) {
+	.item-inner {
 		display: grid;
-		grid-column-gap: 4px;
-		grid-template-columns: minmax(calc(50% - 4px), max-content) minmax(calc(50% - 4px), max-content);
-		grid-template-rows: max-content max-content;
+		grid-column-gap: 1em;
+		grid-template-columns: 1fr 1fr;
 	}
 
-	.item > span > span:last-of-type {
+	.item-inner > span:last-of-type {
     text-align: right;
   }
 }
@@ -346,29 +307,51 @@ details[open] .item:before {
 /* lists */
 
 .unstyled-list {
-  list-style: none;
-}
-
-.links-list {
-	margin: 0;
-	padding: 0;
 	list-style: none;
 }
 
-@media print, screen and (min-width: 480px) {
-  .link-item {
-    line-height: 1;
-    display: inline-grid;
-  }
+.links-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
+	grid-gap: 1em;
+	width: 100%;
+}
 
-	.link-item:not(:last-of-type) {
-    padding-right: 10px;
-    border-right: 1px solid var(--swatch-dark-gray);
-    margin-right: 10px;
-  }
+.link-item {
+	display: grid;
+	line-height: 1;
+	border: 0;
+}
+
+.link-item a {
+	display: grid;
+	min-height: 48px;
+	justify-content: center;
+	align-content: center;
+	border: 2px solid;
+	border-radius: .5em;
+	padding: .5em 1em;
+}
+
+@media print, screen and (min-width: 640px) {
+	.link-item a {
+		min-height: 2em;
+	}
+}
+
+.link-item a:hover {
+	background-color: var(--swatch-interactive);
+	color: var(--swatch-background-color);
 }
 
 /* text styles */
+
+.person-sameAs {
+	grid-column: 1 / -1;
+	font-size: smaller;
+	margin-top: 1em;
+	margin-bottom: -1em;
+}
 
 .property-name {
 	font-weight: bold;
@@ -377,16 +360,15 @@ details[open] .item:before {
 }
 
 .person-name {
-  font-size: xx-large;
+  font-size: larger;
   font-weight: bold;
 	display: block;
 	letter-spacing: .5px;
+	line-height: 1;
 }
 
-@media (max-width: 479px) {
-	.person-name {
-		line-height: 1.2;
-	}
+.person-name-inner {
+	font-size: larger;
 }
 
 .property-roleName,
@@ -396,32 +378,29 @@ details[open] .item:before {
 
 .person-jobTitle {
   display: block;
-  margin: 5px 0;
 	color: var(--swatch-dark-gray);
   letter-spacing: 2px;
 	text-transform: uppercase;
-  font-size: x-large;
 	line-height: 1;
 }
 
 .person-image {
   max-width: 100%;
-  width: 75px;
-  height: 75px;
+  width: 4em;
+  height: 4em;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid white;
+}
+
+@media print, screen and (min-width: 640px) {
+	.person-image {
+		justify-self: flex-end;
+	}
 }
 
 .person-description {
-  font-size: 1.125em;
-  margin: 20px 0;
-}
-
-@media print {
-  .person-description {
-    margin-bottom: 0;
-  }
+  font-size: larger;
+  margin: 2em 0;
 }
 
 .work-description,
@@ -435,138 +414,184 @@ details[open] .item:before {
   .education-description,
   .skill-description {
     padding-left: 0;
-  }
+	}
+}
+
+.property-dateRange span {
+  display: inline;
 }</style>
       </head>
       <body>
-        <main><div role="presentation"><header><img src="https://pickpuck.com/avatar.jpg" alt="Michael Puckett, UI/UX Engineer" aria-hidden="true" draggable="false" width="75" height="75" data-hide-from-print="" class="person-image property-image"> <h1 class="primary-heading"><span role="presentation" class="person-name property-name">
-					Michael Puckett<span role="presentation" class="visually-hidden">,</span></span> <span role="presentation" class="person-jobTitle property-jobTitle">
+        <main><header><img src="https://pickpuck.com/avatar.jpg" alt="Michael Puckett, UI/UX Engineer" aria-hidden="true" draggable="false" width="75" height="75" data-hide-from-print="" class="person-image property-image"> <h1 class="primary-heading"><span role="presentation" class="person-name property-name"><span role="presentation" class="person-name-inner">
+						Michael Puckett
+					</span> <span hidden="hidden">,</span></span> <span role="presentation" class="person-jobTitle property-jobTitle">
 					UI/UX Engineer
-				</span></h1> <p class="person-description property-description">
-				I'm a creative technologist currently based in Louisville, KY specializing in building accessible digital experiences.
-			</p> <ul data-hide-from-print="" class="links-list"><li class="link-item"><a href="mailto:michaelcpuckett@gmail.com?subject=yo">
-						email
-					</a></li> <li class="link-item"><a href="https://github.com/michaelcpuckett">
-						github	
-					</a></li><li class="link-item"><a href="https://stackoverflow.com/users/1226227/michaelpuckett">
-						stackoverflow	
-					</a></li><li class="link-item"><a href="https://linkedin.com/in/michaelcpuckett">
-						linkedin	
-					</a></li> <li class="link-item"><a href="michael-puckett-resume.pdf">
-            resume
-					</a></li></ul></header> <section class="section-work-experience"><h2>Work Experience</h2> <ul class="unstyled-list"><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+				</span></h1> <!----> <div data-hide-from-print="" class="person-sameAs property-sameAs"><ul class="links-list"><li class="link-item"><a href="mailto:michaelcpuckett@gmail.com?subject=yo">
+							email
+						</a></li> <li class="link-item"><a href="michael-puckett-resume.pdf" aria-label="résumé">
+							resume
+						</a></li> <li class="link-item"><a href="https://linkedin.com/in/michaelcpuckett">
+							linkedin	
+						</a></li><li class="link-item"><a href="https://github.com/michaelcpuckett">
+							github	
+						</a></li><li class="link-item"><a href="https://stackoverflow.com/users/1226227/michaelpuckett">
+							stackoverflow	
+						</a></li><li class="link-item"><a href="https://twitter.com/mpuckett">
+							twitter	
+						</a></li></ul></div></header> <section class="section-work-experience"><h2>Work Experience</h2> <ul class="unstyled-list"><li><details><summary><span role="presentation" class="work-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
                 LiveSchool
               </span> <span hidden="hidden">
                 —
               </span> <span role="presentation" class="work-employer-location property-organization-location">
-                  Nashville, TN
+                  Nashville, Tennessee
                 </span></span> <span hidden="hidden">
             —
           </span> <span><span role="presentation" class="work-roleName property-roleName">
               Frontend Engineer
             </span> <span hidden="hidden">
               —
-            </span> <span role="presentation" class="property-dateRange"><time datetime="2018" class="work-startDate property-startDate">
-                2018</time>—<time datetime="2020" class="work-endDate property-endDate">Present
-              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><span role="presentation" class="visually-hidden">
+                2018
+                
+                  through Present
+                </span> <span aria-hidden="true"><time datetime="2018" class="work-startDate property-startDate">
+                  2018</time>—<time datetime="2021" class="work-endDate property-endDate">Present
+                  </time></span></span></span></span></span></summary> <div class="work-description property-description"><p>
         LiveSchool is a classroom behavior-tracking platform with an audience of teachers, parents, and students.
-      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
                 Humana
               </span> <span hidden="hidden">
                 —
               </span> <span role="presentation" class="work-employer-location property-organization-location">
-                  Louisville, KY
+                  Louisville, Kentucky
                 </span></span> <span hidden="hidden">
             —
           </span> <span><span role="presentation" class="work-roleName property-roleName">
               Web Developer
             </span> <span hidden="hidden">
               —
-            </span> <span role="presentation" class="property-dateRange"><time datetime="2016" class="work-startDate property-startDate">
-                2016</time>—<time datetime="2018" class="work-endDate property-endDate">2018
-              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><span role="presentation" class="visually-hidden">
+                2016
+                
+                  through 2018
+                </span> <span aria-hidden="true"><time datetime="2016" class="work-startDate property-startDate">
+                  2016</time>—<time datetime="2018" class="work-endDate property-endDate">2018
+                  </time></span></span></span></span></span></summary> <div class="work-description property-description"><p>
         I built and maintained a library of accessible web components that was shared across many enterprise products.
-      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
                 Apple
               </span> <span hidden="hidden">
                 —
               </span> <span role="presentation" class="work-employer-location property-organization-location">
-                  Cupertino, CA
+                  Cupertino, California
                 </span></span> <span hidden="hidden">
             —
           </span> <span><span role="presentation" class="work-roleName property-roleName">
               UI Engineer
             </span> <span hidden="hidden">
               —
-            </span> <span role="presentation" class="property-dateRange"><time datetime="2013" class="work-startDate property-startDate">
-                2013</time>—<time datetime="2016" class="work-endDate property-endDate">2016
-              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><span role="presentation" class="visually-hidden">
+                2013
+                
+                  through 2016
+                </span> <span aria-hidden="true"><time datetime="2013" class="work-startDate property-startDate">
+                  2013</time>—<time datetime="2016" class="work-endDate property-endDate">2016
+                  </time></span></span></span></span></span></summary> <div class="work-description property-description"><p>
         I built interfaces to support product launches, campaigns, and transactions on apple.com.
-      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
                 CNN
               </span> <span hidden="hidden">
                 —
               </span> <span role="presentation" class="work-employer-location property-organization-location">
-                  Atlanta, GA
+                  Atlanta, Georgia
                 </span></span> <span hidden="hidden">
             —
           </span> <span><span role="presentation" class="work-roleName property-roleName">
               Senior Web Developer
             </span> <span hidden="hidden">
               —
-            </span> <span role="presentation" class="property-dateRange"><time datetime="2013" class="work-startDate property-startDate">
-                2013</time>—<time datetime="2013" class="work-endDate property-endDate">2013
-              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><span role="presentation" class="visually-hidden">
+                2013
+                <!----></span> <span aria-hidden="true"><time datetime="2013" class="work-startDate property-startDate">
+                  2013</time><!----></span></span></span></span></span></summary> <div class="work-description property-description"><p>
         I worked on the responsive redesign and replatforming of cnn.com.
-      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
                 iostudio
               </span> <span hidden="hidden">
                 —
               </span> <span role="presentation" class="work-employer-location property-organization-location">
-                  Nashville, TN
+                  Nashville, Tennessee
                 </span></span> <span hidden="hidden">
             —
           </span> <span><span role="presentation" class="work-roleName property-roleName">
               Frontend Developer
             </span> <span hidden="hidden">
               —
-            </span> <span role="presentation" class="property-dateRange"><time datetime="2012" class="work-startDate property-startDate">
-                2012</time>—<time datetime="2013" class="work-endDate property-endDate">2013
-              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><span role="presentation" class="visually-hidden">
+                2012
+                
+                  through 2013
+                </span> <span aria-hidden="true"><time datetime="2012" class="work-startDate property-startDate">
+                  2012</time>—<time datetime="2013" class="work-endDate property-endDate">2013
+                  </time></span></span></span></span></span></summary> <div class="work-description property-description"><p>
         I built marketing websites and web apps for national clients, including the National Guard.
-      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
                 Fruit of the Loom
               </span> <span hidden="hidden">
                 —
               </span> <span role="presentation" class="work-employer-location property-organization-location">
-                  Bowling Green, KY
+                  Bowling Green, Kentucky
                 </span></span> <span hidden="hidden">
             —
           </span> <span><span role="presentation" class="work-roleName property-roleName">
               Designer/Developer
             </span> <span hidden="hidden">
               —
-            </span> <span role="presentation" class="property-dateRange"><time datetime="2011" class="work-startDate property-startDate">
-                2011</time>—<time datetime="2012" class="work-endDate property-endDate">2012
-              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><span role="presentation" class="visually-hidden">
+                2011
+                
+                  through 2012
+                </span> <span aria-hidden="true"><time datetime="2011" class="work-startDate property-startDate">
+                  2011</time>—<time datetime="2012" class="work-endDate property-endDate">2012
+                  </time></span></span></span></span></span></summary> <div class="work-description property-description"><p>
         I designed and developed a relaunch of jerzees.com.
-      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
                 2-Com
               </span> <span hidden="hidden">
                 —
               </span> <span role="presentation" class="work-employer-location property-organization-location">
-                  Nashville, TN
+                  Nashville, Tennessee
                 </span></span> <span hidden="hidden">
             —
           </span> <span><span role="presentation" class="work-roleName property-roleName">
               Designer/Developer
             </span> <span hidden="hidden">
               —
-            </span> <span role="presentation" class="property-dateRange"><time datetime="2010" class="work-startDate property-startDate">
-                2010</time>—<time datetime="2012" class="work-endDate property-endDate">2012
-              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><span role="presentation" class="visually-hidden">
+                2010
+                
+                  through 2012
+                </span> <span aria-hidden="true"><time datetime="2010" class="work-startDate property-startDate">
+                  2010</time>—<time datetime="2012" class="work-endDate property-endDate">2012
+                  </time></span></span></span></span></span></summary> <div class="work-description property-description"><p>
         I worked on a web app that generated print marketing materials for small businesses.
-      </p></div></details></li><!----><!----></ul></section> <section class="section-skills"><h2>Skills</h2> <ul class="unstyled-list"><li><details><summary><span role="presentation" class="skill-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="skill-name property-name">
+      </p></div></details></li><!----><!----></ul></section> <section class="section-skills"><h2>Skills</h2> <ul class="unstyled-list"><li><details><summary><span role="presentation" class="skill-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="skill-name property-name">
               JavaScript
             </span></span> <span hidden="hidden">
             —
@@ -578,9 +603,9 @@ details[open] .item:before {
         I have evaluated JavaScript frameworks for use at enterprise scale, balancing various factors, including functionality, ecosystem, and performance.
       </p><p>
         I have strong familiarity with Vue.js, React, Svelte, and Can.js.
-      </p><p>
-        Although not my primary focus, I have some experience with Node.js, including implementing frontend build systems.
-      </p></div></details></li><li><details><summary><span role="presentation" class="skill-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="skill-name property-name">
+      </p></div></details></li><li><details><summary><span role="presentation" class="skill-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="skill-name property-name">
               Accessibility
             </span></span> <span hidden="hidden">
             —
@@ -590,7 +615,9 @@ details[open] .item:before {
         To accommodate all users, including those using assistive technologies, such as screen readers or voice control, I implement semantic markup using ARIA and follow WCAG best practices.
       </p><p>
         I have worked on websites subject to Section 508 of the US Rehabilitation Act, where the code I wrote needed to pass legal standards in regards to accessibility. This included manual testing, user testing, and ongoing accessibility audits.
-      </p></div></details></li><li><details><summary><span role="presentation" class="skill-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="skill-name property-name">
+      </p></div></details></li><li><details><summary><span role="presentation" class="skill-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="skill-name property-name">
               Design Systems
             </span></span> <span hidden="hidden">
             —
@@ -602,76 +629,94 @@ details[open] .item:before {
         I've found that developers can better communicate with designers by building a living library of reusable components that acts as a shared visual vocabulary.
       </p><p>
         I have led successful projects to standardize, componentize, and document complex design systems for use by large cross-functional teams.
-      </p></div></details></li></ul></section> <section data-hide-from-print="" class="section-past-projects"><h2>Past Projects</h2> <ul class="unstyled-list"><!----><!----><!----><!----><!----><!----><!----><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+      </p></div></details></li></ul></section> <section data-hide-from-print="" class="section-past-projects"><h2>Past Projects</h2> <ul class="unstyled-list"><!----><!----><!----><!----><!----><!----><!----><li><details><summary><span role="presentation" class="work-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
                 Imagewest
               </span> <span hidden="hidden">
                 —
               </span> <span role="presentation" class="work-employer-location property-organization-location">
-                  Bowling Green, KY
+                  Bowling Green, Kentucky
                 </span></span> <span hidden="hidden">
             —
           </span> <span><span role="presentation" class="work-roleName property-roleName">
               Jr. Designer/Developer
             </span> <span hidden="hidden">
               —
-            </span> <span role="presentation" class="property-dateRange"><time datetime="2010" class="work-startDate property-startDate">
-                2010</time>—<time datetime="2012" class="work-endDate property-endDate">2012
-              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><span role="presentation" class="visually-hidden">
+                2010
+                
+                  through 2012
+                </span> <span aria-hidden="true"><time datetime="2010" class="work-startDate property-startDate">
+                  2010</time>—<time datetime="2012" class="work-endDate property-endDate">2012
+                  </time></span></span></span></span></span></summary> <div class="work-description property-description"><p>
         I designed logos, brochures, signage and websites for local clients with a team of junior designers.
-      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
+      </p></div></details></li><li><details><summary><span role="presentation" class="work-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="work-employer-name property-name">
                 Rise Over Run Magazine
               </span> <span hidden="hidden">
                 —
               </span> <span role="presentation" class="work-employer-location property-organization-location">
-                  Bowling Green, KY
+                  Bowling Green, Kentucky
                 </span></span> <span hidden="hidden">
             —
           </span> <span><span role="presentation" class="work-roleName property-roleName">
               Founder/Editor-in-Chief
             </span> <span hidden="hidden">
               —
-            </span> <span role="presentation" class="property-dateRange"><time datetime="2007" class="work-startDate property-startDate">
-                2007</time>—<time datetime="2009" class="work-endDate property-endDate">2009
-              </time></span></span></span></span></summary> <div class="work-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><span role="presentation" class="visually-hidden">
+                2007
+                
+                  through 2009
+                </span> <span aria-hidden="true"><time datetime="2007" class="work-startDate property-startDate">
+                  2007</time>—<time datetime="2009" class="work-endDate property-endDate">2009
+                  </time></span></span></span></span></span></summary> <div class="work-description property-description"><p>
         I started an online culture magazine that covered my local community. I built and maintained the website, produced and edited online content, art directed photo shoots, coordinated fundraising events, and managed a staff of student writers, photographers and videographers.
       </p><p>
         The magazine won the 2007 Society of Professional Journalists Mark of Excellence Award for "Best All-Around Independent Online Student Publication."
-      </p></div></details></li></ul></section> <section class="section-education"><h2>Education</h2> <ul class="unstyled-list"><li><details><summary><span role="presentation" class="education-item item"><span role="presentation"><span role="presentation"><span role="presentation" class="education-institution-name property-name">
+      </p></div></details></li></ul></section> <section class="section-education"><h2>Education</h2> <ul class="unstyled-list"><li><details><summary><span role="presentation" class="education-item item"><span aria-hidden="true" class="item-bullet">
+          ►
+        </span> <span role="presentation" class="item-inner"><span role="presentation"><span role="presentation" class="education-institution-name property-name">
               Western Kentucky University
             </span> <span hidden="hidden">
               —
             </span> <span role="presentation" class="education-institution-location property-organization-location">
-                Bowling Green, KY
+                Bowling Green, Kentucky
               </span></span> <span hidden="hidden">
             —
           </span> <span><span role="presentation" class="education-roleName property-roleName">
               Advertising &amp; Graphic Design
             </span> <span hidden="hidden">
               —
-            </span> <span role="presentation" class="property-dateRange"><time datetime="2005" class="education-startDate property-startDate">
-                2005</time>—<time datetime="2009" class="education-endDate property-endDate">2009
-              </time></span></span></span></span></summary> <div class="education-description property-description"><p>
+            </span> <span role="presentation" class="property-dateRange"><span role="presentation" class="visually-hidden">
+                2005
+                
+                  through 2009
+                </span> <span aria-hidden="true"><time datetime="2005" class="work-startDate property-startDate">
+                  2005</time>—<time datetime="2009" class="work-endDate property-endDate">2009
+                  </time></span></span></span></span></span></summary> <div class="education-description property-description"><p>
         BA; Art &amp; Design, Creative Strategy, Digital Media, Typography, Newspaper Design; 3.9 GPA
-      </p></div></details></li></ul></section></div></main><script type="application/ld+json">
+      </p></div></details></li></ul></section></main><script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Michael Puckett",
       "givenName": "Michael",
       "familyName": "Puckett",
-      "description": "I'm a creative technologist currently based in Louisville, KY specializing in building accessible digital experiences.",
       "jobTitle": "UI/UX Engineer",
       "image": "https://pickpuck.com/avatar.jpg",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Louisville",
-        "addressRegion": "KY",
+        "addressRegion": "Kentucky",
         "postalCode": "40204"
       },
       "sameAs": [
+        "https://linkedin.com/in/michaelcpuckett",
         "https://github.com/michaelcpuckett",
         "https://stackoverflow.com/users/1226227/michaelpuckett",
-        "https://linkedin.com/in/michaelcpuckett"
+        "https://twitter.com/mpuckett"
       ],
       "url": "https://pickpuck.com",
       "mainEntityOfPage": "https://pickpuck.com",
@@ -689,7 +734,7 @@ details[open] .item:before {
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Nashville",
-            "addressRegion": "TN"
+            "addressRegion": "Tennessee"
           },
           "sameAs": "https://www.whyliveschool.com"
         },
@@ -708,7 +753,7 @@ details[open] .item:before {
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Louisville",
-            "addressRegion": "KY"
+            "addressRegion": "Kentucky"
           },
           "sameAs": "https://www.humana.com"
         },
@@ -728,7 +773,7 @@ details[open] .item:before {
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Cupertino",
-            "addressRegion": "CA"
+            "addressRegion": "California"
           },
           "sameAs": "https://www.apple.com"
         },
@@ -746,7 +791,7 @@ details[open] .item:before {
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Atlanta",
-            "addressRegion": "GA"
+            "addressRegion": "Georgia"
           },
           "sameAs": "https://www.cnn.com"
         },
@@ -764,7 +809,7 @@ details[open] .item:before {
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Nashville",
-            "addressRegion": "TN"
+            "addressRegion": "Tennessee"
           },
           "sameAs": "https://www.iostudio.com"
         },
@@ -782,7 +827,7 @@ details[open] .item:before {
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Bowling Green",
-            "addressRegion": "KY"
+            "addressRegion": "Kentucky"
           },
           "sameAs": "https://www.fruit.com"
         },
@@ -800,7 +845,7 @@ details[open] .item:before {
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Nashville",
-            "addressRegion": "TN"
+            "addressRegion": "Tennessee"
           },
           "sameAs": "https://www.2-com.net"
         },
@@ -818,7 +863,7 @@ details[open] .item:before {
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Bowling Green",
-            "addressRegion": "KY"
+            "addressRegion": "Kentucky"
           },
           "sameAs": "https://www.wkuimagewest.com"
         },
@@ -836,7 +881,7 @@ details[open] .item:before {
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Bowling Green",
-            "addressRegion": "KY"
+            "addressRegion": "Kentucky"
           }
         },
         "roleName": "Founder/Editor-in-Chief",
@@ -855,7 +900,7 @@ details[open] .item:before {
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Bowling Green",
-            "addressRegion": "KY"
+            "addressRegion": "Kentucky"
           },
           "sameAs": "https://www.wku.edu"
         },
@@ -873,8 +918,7 @@ details[open] .item:before {
         "description": [
 		      "I have an advanced understanding of the ES language, including recently added features such as async/await.",
           "I have evaluated JavaScript frameworks for use at enterprise scale, balancing various factors, including functionality, ecosystem, and performance.",
-          "I have strong familiarity with Vue.js, React, Svelte, and Can.js.",
-          "Although not my primary focus, I have some experience with Node.js, including implementing frontend build systems."
+          "I have strong familiarity with Vue.js, React, Svelte, and Can.js."
         ]
       }, {
         "@type": "Thing",
