@@ -310,38 +310,47 @@ details[open] .item-bullet {
 	list-style: none;
 }
 
-.links-list {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
-	grid-gap: 1em;
-	width: 100%;
+@media screen and (max-width: 479px) {
+  .links-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
+    grid-gap: 1em;
+    width: 100%;
+  }
+
+  .link-item {
+    display: grid;
+    line-height: 1;
+    border: 0;
+  }
+
+  .link-item a {
+    display: grid;
+    min-height: 48px;
+    justify-content: center;
+    align-content: center;
+    border: 2px solid;
+    border-radius: .5em;
+    padding: .5em 1em;
+  }
+
+  .link-item a:hover {
+    background-color: var(--swatch-interactive);
+    color: var(--swatch-background-color);
+  }
 }
 
-.link-item {
-	display: grid;
-	line-height: 1;
-	border: 0;
-}
+@media print, screen and (min-width: 480px) {
+  .link-item {
+    line-height: 1;
+    display: inline-grid;
+  }
 
-.link-item a {
-	display: grid;
-	min-height: 48px;
-	justify-content: center;
-	align-content: center;
-	border: 2px solid;
-	border-radius: .5em;
-	padding: .5em 1em;
-}
-
-@media print, screen and (min-width: 640px) {
-	.link-item a {
-		min-height: 2em;
-	}
-}
-
-.link-item a:hover {
-	background-color: var(--swatch-interactive);
-	color: var(--swatch-background-color);
+	.link-item:not(:last-of-type) {
+    padding-right: .5em;
+    border-right: 1px solid var(--swatch-dark-gray);
+    margin-right: .5em;
+  }
 }
 
 /* text styles */
@@ -422,7 +431,7 @@ details[open] .item-bullet {
 }</style>
       </head>
       <body>
-        <main><header><img src="https://pickpuck.com/avatar.jpg" alt="Michael Puckett, UI/UX Engineer" aria-hidden="true" draggable="false" width="75" height="75" data-hide-from-print="" class="person-image property-image"> <h1 class="primary-heading"><span role="presentation" class="person-name property-name"><span role="presentation" class="person-name-inner">
+        <main><header><img src="https://pickpuck.com/avatar.jpg" alt="Michael Puckett, UI/UX Engineer" aria-hidden="true" width="75" height="75" data-hide-from-print="" class="person-image property-image"> <h1 class="primary-heading"><span role="presentation" class="person-name property-name"><span role="presentation" class="person-name-inner">
 						Michael Puckett
 					</span> <span hidden="hidden">,</span></span> <span role="presentation" class="person-jobTitle property-jobTitle">
 					UI/UX Engineer
@@ -699,8 +708,16 @@ details[open] .item-bullet {
         BA; Art &amp; Design, Creative Strategy, Digital Media, Typography, Newspaper Design; 3.9 GPA
       </p></div></details></li></ul></section></main><script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "Person",
+      "@context": [
+        "https://schema.org/",
+        {
+          "foaf": "http://xmlns.com/foaf/0.1/"
+        }
+      ],
+      "@type": [
+        "Person",
+        "foaf:Person"
+      ],
       "name": "Michael Puckett",
       "givenName": "Michael",
       "familyName": "Puckett",
@@ -760,7 +777,7 @@ details[open] .item-bullet {
         "roleName": "Web Developer",
         "startDate": "2016",
         "endDate": "2018",
-        "description": [
+        "responsibilities": [
           "I built and maintained a library of accessible web components that was shared across many enterprise products."
         ]
       }, {
@@ -780,7 +797,7 @@ details[open] .item-bullet {
         "roleName": "UI Engineer",
         "startDate": "2013",
         "endDate": "2016",
-        "description": [
+        "responsibilities": [
           "I built interfaces to support product launches, campaigns, and transactions on apple.com."
         ]
       }, {
@@ -798,7 +815,7 @@ details[open] .item-bullet {
         "roleName": "Senior Web Developer",
         "startDate": "2013",
         "endDate": "2013",
-        "description": [
+        "responsibilities": [
           "I worked on the responsive redesign and replatforming of cnn.com."
         ]
       }, {
@@ -816,7 +833,7 @@ details[open] .item-bullet {
         "roleName": "Frontend Developer",
         "startDate": "2012",
         "endDate": "2013",
-        "description": [
+        "responsibilities": [
           "I built marketing websites and web apps for national clients, including the National Guard."
         ]
       }, {
@@ -834,7 +851,7 @@ details[open] .item-bullet {
         "roleName": "Designer/Developer",
         "startDate": "2011",
         "endDate": "2012",
-        "description": [
+        "responsibilities": [
           "I designed and developed a relaunch of jerzees.com."
         ]
       }, {
@@ -852,7 +869,7 @@ details[open] .item-bullet {
         "roleName": "Designer/Developer",
         "startDate": "2010",
         "endDate": "2012",
-        "description": [
+        "responsibilities": [
           "I worked on a web app that generated print marketing materials for small businesses."
         ]
       }, {
@@ -870,7 +887,7 @@ details[open] .item-bullet {
         "roleName": "Jr. Designer/Developer",
         "startDate": "2010",
         "endDate": "2012",
-        "description": [
+        "responsibilities": [
           "I designed logos, brochures, signage and websites for local clients with a team of junior designers."
         ]
       }, {
@@ -954,7 +971,15 @@ details[open] .item-bullet {
         ],
         "description": "Software engineer specializing in building usable, accessible digital interfaces",
         "sameAs": "https://en.wikipedia.org/wiki/Software_engineer"
-      }
+      },
+      "foaf:name": "Michael Puckett",
+      "foaf:title": "Mr",
+      "foaf:givenname": "Michael",
+      "foaf:family_name": "Puckett",
+      "foaf:depiction": "https://pickpuck.com/avatar.jpg",
+      "foaf:homepage": "https://pickpuck.com",
+      "foaf:workplaceHomepage": "https://www.whyliveschool.com",
+      "foaf:schoolHomepage": "https://www.wku.edu"
     }
   </script>
         
