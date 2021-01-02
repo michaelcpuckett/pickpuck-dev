@@ -14,35 +14,40 @@
       />
 			<h1 class="primary-heading">
 				<span class="person-name property-name" role="presentation">
-					{{ name }}<span hidden>,</span>
+					<span class="person-name-inner" role="presentation">
+						{{ name }}
+					</span>
+					<span hidden>,</span>
 				</span>
 				<span class="person-jobTitle property-jobTitle" role="presentation">
 					{{ jobTitle }}
 				</span>
 			</h1>
-			<p class="person-description property-description">
+			<p class="person-description property-description" v-if="description">
 				{{ description }}
 			</p>
-			<ul class="links-list" data-hide-from-print>
-				<li class="link-item">
-					<a :href="'mailto:' + email + '?subject=yo'">
-						email
-					</a>
-				</li>
-				<li
-					v-for="link in sameAs"
-					:key="link"
-					class="link-item">
-					<a
-						:href="link">
-						{{ new URL(link).hostname.split('.com').shift() }}	
-					</a>
-				</li>
-				<li class="link-item">
-					<a href="michael-puckett-resume.pdf" aria-label="résumé">
-            resume
-					</a>
-				</li>
-			</ul>
+			<div class="person-sameAs property-sameAs" data-hide-from-print>
+				<ul class="links-list">
+					<li class="link-item">
+						<a :href="'mailto:' + email + '?subject=yo'">
+							email
+						</a>
+					</li>
+					<li class="link-item">
+						<a href="michael-puckett-resume.pdf" aria-label="résumé">
+							resume
+						</a>
+					</li>
+					<li
+						v-for="link in sameAs"
+						:key="link"
+						class="link-item">
+						<a
+							:href="link">
+							{{ new URL(link).hostname.split('.com').shift() }}	
+						</a>
+					</li>
+				</ul>
+			</div>
 		</header>
 </template>

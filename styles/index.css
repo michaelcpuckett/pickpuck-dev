@@ -2,6 +2,7 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	list-style: none;
 	-webkit-text-size-adjust: 100%;
 	-webkit-tap-highlight-color: transparent;
 }
@@ -52,27 +53,22 @@ body {
 	background: var(--swatch-background-color);
 	background-attachment: fixed;
 	color: var(--swatch-text-color);
-	font-size: large;
+	line-height: 1.4;
 }
 
 @media print {
   body {
-    font-size: medium;
-		line-height: 1.4;
+		font-size: larger;
   }
 }
 
 main {
 	width: 100%;
-	max-width: 680px;
+	max-width: 600px;
 	margin: 0 auto;
-	padding: 10px;
-}
-
-@media print, screen and (min-width: 480px) {
-	main {     
-	  padding: 20px 40px;
-	} 
+	padding: 2em;
+	display: grid;
+	grid-gap: 4em;
 }
 
 @media print {
@@ -82,21 +78,21 @@ main {
 	}
 }
 
-header,
-section {
-	padding: 20px;
+header {
+	display: grid;
+	grid-gap: 1em;
+	grid-template-columns: 1fr;
+	font-size: larger;
 }
 
-@media print, screen and (min-width: 480px) {
-  header {
-    text-align: center;
-  }
-}
-
-@media print {
-  header {
-    padding-top: 0;
+@media print, screen and (min-width: 640px) {
+	header {
+		grid-template-columns: max-content max-content 1fr;
 	}
+}
+
+section {
+	font-size: larger;
 }
 
 /* hidden items */
@@ -138,18 +134,11 @@ section {
 	outline: 0;
 }
 
-:focus-visible,
-summary:focus-visible > span {
+:focus-visible {
 	outline: 0;
 	border-radius: 2px;
 	box-shadow:
-		0 0 0 2px var(--swatch-background-color),
-		0 0 0 6px var(--swatch-focused);
-}
-
-summary:focus-visible {
-	box-shadow: none;
-	border-radius: 0;
+		0 0 0 4px var(--swatch-focused);
 }
 
 /* headings */
@@ -161,16 +150,25 @@ h3 {
 	line-height: inherit;
 }
 
-@media print {
-  h1 {
-    margin-top: 0;
+h1 {
+	display: grid;
+	align-content: stretch;
+	align-items: center;
+	justify-self: flex-start;
+	font-size: larger;
+	grid-row-gap: .5em;
+}
+
+@media screen and (min-width: 640px) {
+	h1 {
+		grid-row-gap: 0;
 	}
 }
 
 h2 {
-	font-size: x-large;
-	margin-bottom: .75em;
-	padding-bottom: .25em;
+	line-height: 1;
+	font-size: larger;
+	padding-bottom: .5em;
 	border-bottom: 1px solid var(--swatch-light-gray);
 }
 
@@ -207,13 +205,12 @@ a:visited {
 /* <details>/<summary> */
 
 details {
-  margin: 20px 0;
+	font-size: smaller;
 }
 
 @media print {
   details {
     page-break-inside: avoid;
-    padding: 0;
   }
 }
 
@@ -228,7 +225,8 @@ details p {
 summary {
 	cursor: pointer;
   border-bottom: 1px solid transparent;
-	padding-bottom: 20px;
+	padding-bottom: 1em;
+	padding-top: 1em;
   list-style: none;
 }
 
@@ -248,37 +246,25 @@ summary span {
   display: block;
 }
 
-@media print {
-	summary {
-		padding-bottom: 14px;
-	}
-
-	summary:before {
-		display: none;
-	}
-}
-
 .item {
 	display: grid;
 	color: var(--swatch-dark-gray);
 	list-style: none;
 	width: 100%;
-	grid-template-columns: 20px minmax(0, 1fr);
-	grid-column-gap: 4px;
+	grid-template-columns: max-content minmax(0, 1fr);
+	grid-column-gap: 6px;
 }
 
 .item-bullet {
   font-family: Arial, Helvetica, sans-serif;
 	color: var(--swatch-interactive);
-	width: 20px;
-	font-size: .9em;
-	height: 20px;
+	font-size: smaller;
 	margin-top: 1px;
 	transform-origin: 0 0;
 }
 
 details[open] .item-bullet {
-	transform: rotate(90deg) translate(4px, -20px);
+	transform: rotate(90deg) translate(3px, -1em);
 	color: var(--swatch-interactive-completed);
 }
 
@@ -287,20 +273,19 @@ details[open] .item-bullet {
 		grid-template-columns: 1fr;
 	}
 
-	.item:before {
-		content: none;
+	.item-bullet {
+		display: none;
 	}
 }
 
-@media print, screen and (min-width: 480px) {
-	.item > span {
+@media print, screen and (min-width: 640px) {
+	.item-inner {
 		display: grid;
-		grid-column-gap: 4px;
-		grid-template-columns: minmax(calc(50% - 4px), max-content) minmax(calc(50% - 4px), max-content);
-		grid-template-rows: max-content max-content;
+		grid-column-gap: 1em;
+		grid-template-columns: 1fr 1fr;
 	}
 
-	.item > span > span:last-of-type {
+	.item-inner > span:last-of-type {
     text-align: right;
   }
 }
@@ -308,29 +293,51 @@ details[open] .item-bullet {
 /* lists */
 
 .unstyled-list {
-  list-style: none;
-}
-
-.links-list {
-	margin: 0;
-	padding: 0;
 	list-style: none;
 }
 
-@media print, screen and (min-width: 480px) {
-  .link-item {
-    line-height: 1;
-    display: inline-grid;
-  }
+.links-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
+	grid-gap: 1em;
+	width: 100%;
+}
 
-	.link-item:not(:last-of-type) {
-    padding-right: 10px;
-    border-right: 1px solid var(--swatch-dark-gray);
-    margin-right: 10px;
-  }
+.link-item {
+	display: grid;
+	line-height: 1;
+	border: 0;
+}
+
+.link-item a {
+	display: grid;
+	min-height: 48px;
+	justify-content: center;
+	align-content: center;
+	border: 2px solid;
+	border-radius: .5em;
+	padding: .5em 1em;
+}
+
+@media print, screen and (min-width: 640px) {
+	.link-item a {
+		min-height: 2em;
+	}
+}
+
+.link-item a:hover {
+	background-color: var(--swatch-interactive);
+	color: var(--swatch-background-color);
 }
 
 /* text styles */
+
+.person-sameAs {
+	grid-column: 1 / -1;
+	font-size: smaller;
+	margin-top: 1em;
+	margin-bottom: -1em;
+}
 
 .property-name {
 	font-weight: bold;
@@ -339,16 +346,15 @@ details[open] .item-bullet {
 }
 
 .person-name {
-  font-size: xx-large;
+  font-size: larger;
   font-weight: bold;
 	display: block;
 	letter-spacing: .5px;
+	line-height: 1;
 }
 
-@media (max-width: 479px) {
-	.person-name {
-		line-height: 1.2;
-	}
+.person-name-inner {
+	font-size: larger;
 }
 
 .property-roleName,
@@ -358,32 +364,29 @@ details[open] .item-bullet {
 
 .person-jobTitle {
   display: block;
-  margin: 5px 0;
 	color: var(--swatch-dark-gray);
   letter-spacing: 2px;
 	text-transform: uppercase;
-  font-size: x-large;
 	line-height: 1;
 }
 
 .person-image {
   max-width: 100%;
-  width: 75px;
-  height: 75px;
+  width: 4em;
+  height: 4em;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid white;
+}
+
+@media print, screen and (min-width: 640px) {
+	.person-image {
+		justify-self: flex-end;
+	}
 }
 
 .person-description {
-  font-size: 1.125em;
-  margin: 20px 0;
-}
-
-@media print {
-  .person-description {
-    margin-bottom: 0;
-  }
+  font-size: larger;
+  margin: 2em 0;
 }
 
 .work-description,

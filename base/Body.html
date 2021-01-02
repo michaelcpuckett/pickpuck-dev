@@ -1,5 +1,44 @@
 <template>
-  <main>
-    <type-person v-bind="config" />
+  <main v-for="{
+    name,
+    image,
+    jobTitle,
+    sameAs,
+    description,
+    email,
+    worksFor,
+    knowsAbout,
+    alumniOf
+  } in [ config ]">
+		<section-header
+		  v-bind="{
+		    name,
+        image,
+        jobTitle,
+        sameAs,
+        description,
+        email
+    	 }">
+		 </section-header>
+		 <section-work-experience
+		   v-bind="{
+		     worksFor
+		   }">
+		 </section-work-experience>
+		 <section-skills
+		   v-bind="{
+		     knowsAbout
+		   }">
+		 </section-skills>
+		 <section-past-projects
+		   v-bind="{
+		     worksFor
+		   }">
+		 </section-past-projects>
+		<section-education
+		  v-bind="{
+		    alumniOf
+		  }">
+		 </section-education>
   </main>
 </template>
