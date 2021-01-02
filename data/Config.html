@@ -1,8 +1,16 @@
 <template>
   <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "Person",
+      "@context": [
+        "https://schema.org/",
+        {
+          "foaf": "http://xmlns.com/foaf/0.1/"
+        }
+      ],
+      "@type": [
+        "Person",
+        "foaf:Person"
+      ],
       "name": "Michael Puckett",
       "givenName": "Michael",
       "familyName": "Puckett",
@@ -62,7 +70,7 @@
         "roleName": "Web Developer",
         "startDate": "2016",
         "endDate": "2018",
-        "description": [
+        "responsibilities": [
           "I built and maintained a library of accessible web components that was shared across many enterprise products."
         ]
       }, {
@@ -82,7 +90,7 @@
         "roleName": "UI Engineer",
         "startDate": "2013",
         "endDate": "2016",
-        "description": [
+        "responsibilities": [
           "I built interfaces to support product launches, campaigns, and transactions on apple.com."
         ]
       }, {
@@ -100,7 +108,7 @@
         "roleName": "Senior Web Developer",
         "startDate": "2013",
         "endDate": "2013",
-        "description": [
+        "responsibilities": [
           "I worked on the responsive redesign and replatforming of cnn.com."
         ]
       }, {
@@ -118,7 +126,7 @@
         "roleName": "Frontend Developer",
         "startDate": "2012",
         "endDate": "2013",
-        "description": [
+        "responsibilities": [
           "I built marketing websites and web apps for national clients, including the National Guard."
         ]
       }, {
@@ -136,7 +144,7 @@
         "roleName": "Designer/Developer",
         "startDate": "2011",
         "endDate": "2012",
-        "description": [
+        "responsibilities": [
           "I designed and developed a relaunch of jerzees.com."
         ]
       }, {
@@ -154,7 +162,7 @@
         "roleName": "Designer/Developer",
         "startDate": "2010",
         "endDate": "2012",
-        "description": [
+        "responsibilities": [
           "I worked on a web app that generated print marketing materials for small businesses."
         ]
       }, {
@@ -172,7 +180,7 @@
         "roleName": "Jr. Designer/Developer",
         "startDate": "2010",
         "endDate": "2012",
-        "description": [
+        "responsibilities": [
           "I designed logos, brochures, signage and websites for local clients with a team of junior designers."
         ]
       }, {
@@ -256,7 +264,15 @@
         ],
         "description": "Software engineer specializing in building usable, accessible digital interfaces",
         "sameAs": "https://en.wikipedia.org/wiki/Software_engineer"
-      }
+      },
+      "foaf:name": "Michael Puckett",
+      "foaf:title": "Mr",
+      "foaf:givenname": "Michael",
+      "foaf:family_name": "Puckett",
+      "foaf:depiction": "https://pickpuck.com/avatar.jpg",
+      "foaf:homepage": "https://pickpuck.com",
+      "foaf:workplaceHomepage": "https://www.whyliveschool.com",
+      "foaf:schoolHomepage": "https://www.wku.edu"
     }
   </script>
 </template>

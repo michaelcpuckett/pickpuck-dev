@@ -6,6 +6,7 @@
 	  endDate,
 	  worksFor,
 	  description,
+    responsibilities,
 	  open
 	">
 	<details :open="open">
@@ -76,8 +77,8 @@
         </span>
 			</span>
 		</summary>
-		<div class="work-description property-description" v-if="description">
-      <p v-for="p in description">
+		<div class="work-description property-description" v-if="description || responsibilities">
+      <p v-for="p in (description || responsibilities)">
         {{ p }}
       </p>
     </div>
